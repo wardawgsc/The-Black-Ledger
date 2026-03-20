@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>SnareBears — Patch 4.2 Booty Report</title>
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg:        #07090f;
+      --bg2:       #0c1020;
+      --bg3:       #111828;
+      --bg4:       #181e2e;
+      --red:       #1c4e78;
+      --red2:      #2568a0;
+      --red-dim:   rgba(28,78,120,0.15);
+      --gold:      #b08a28;
+      --gold2:     #b08a28;
+      --yellow:    #b08a28;
+      --text:      #7a9ab8;
+      --bright:    #c8dce8;
+      --dim:       #3a5068;
+      --border:    #141e2c;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Share Tech Mono', 'Courier New', monospace;
+      width: 1200px;
+      margin: 0 auto;
+      padding: 36px 40px;
+      position: relative;
+    }
+
+    /* Subtle noise texture */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: repeating-linear-gradient(
+        0deg,
+        transparent 0px, transparent 3px,
+        rgba(0,0,0,0.08) 3px, rgba(0,0,0,0.08) 4px
+      );
+      pointer-events: none;
+      z-index: 9999;
+    }
+
+    /* Diagonal stripe texture helper */
+    .stripes {
+      background-image: repeating-linear-gradient(
+        45deg,
+        transparent,
+        transparent 4px,
+        rgba(28,78,120,0.04) 4px,
+        rgba(28,78,120,0.04) 8px
+      );
+    }
+
+    /* ─── HEADER ───────────────────────────────────────── */
+    .header {
+      display: flex;
+      align-items: center;
+      gap: 30px;
+      padding-bottom: 28px;
+      margin-bottom: 28px;
+      border-bottom: 1px solid var(--border);
+      position: relative;
+    }
+    .header::after {
+      content: '';
+      position: absolute;
+      bottom: -1px; left: 0;
+      width: 60%;
+      height: 1px;
+      background: linear-gradient(to right, var(--gold), transparent);
+    }
+
+    .logo {
+      width: 110px;
+      height: auto;
+      filter: drop-shadow(0 0 10px rgba(28,78,120,0.5));
+      flex-shrink: 0;
+    }
+
+    .header-center { flex: 1; }
+    .header-eyebrow {
+      font-size: 16px;
+      letter-spacing: 5px;
+      color: var(--text);
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    .header-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 38px;
+      font-weight: 900;
+      color: var(--bright);
+      letter-spacing: 3px;
+      text-shadow: none;
+      line-height: 1;
+    }
+    .header-sub {
+      font-size: 13px;
+      letter-spacing: 3px;
+      color: var(--text);
+      margin-top: 10px;
+    }
+    .header-sub span { color: var(--yellow); }
+
+    .header-skull {
+      font-size: 100px;
+      line-height: 1;
+      opacity: 0.07;
+      position: absolute;
+      right: 0; top: -10px;
+      user-select: none;
+    }
+
+    /* ─── STATS ROW ────────────────────────────────────── */
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      margin-bottom: 28px;
+    }
+    .stat-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-top: 2px solid var(--red);
+      padding: 18px 16px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .stat-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(150deg, rgba(28,78,120,0.10) 0%, transparent 55%);
+    }
+    .stat-value {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 30px;
+      font-weight: 700;
+      color: var(--bright);
+      text-shadow: none;
+      line-height: 1.1;
+    }
+    .stat-label {
+      font-size: 12px;
+      letter-spacing: 3px;
+      color: var(--text);
+      text-transform: uppercase;
+      margin-top: 6px;
+    }
+
+    /* ─── SECTION HEADERS ──────────────────────────────── */
+    .section { margin-bottom: 28px; }
+    .section-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 13px;
+      letter-spacing: 4px;
+      color: var(--bright);
+      text-transform: uppercase;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .section-title::before { content: '▸'; color: var(--red); font-size: 14px; }
+    .section-subtitle {
+      font-size: 13px;
+      letter-spacing: 2px;
+      color: var(--text);
+      margin-bottom: 12px;
+      text-transform: uppercase;
+    }
+
+    /* ─── PLUNDERERS ───────────────────────────────────── */
+    .plunderer-row {
+      display: grid;
+      grid-template-columns: 32px 1fr 100px minmax(0,1fr) 240px;
+      align-items: center;
+      gap: 16px;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .plunderer-rank {
+      font-family: 'Orbitron', sans-serif;
+      color: var(--yellow);
+      font-size: 16px;
+      font-weight: 700;
+    }
+    .plunderer-name { color: var(--bright); font-size: 15px; }
+    .plunderer-raids { color: var(--text); font-size: 13px; text-align: right; }
+    .bar-wrap {
+      background: var(--bg3);
+      height: 8px;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    .bar-fill {
+      height: 100%;
+      border-radius: 4px;
+      background: linear-gradient(to right, var(--red), var(--red2));
+      box-shadow: none;
+    }
+    .plunderer-value {
+      color: var(--yellow);
+      font-size: 17px;
+      text-align: right;
+      text-shadow: none;
+    }
+
+    /* ─── TWO COLUMN ───────────────────────────────────── */
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 28px;
+      margin-bottom: 28px;
+    }
+
+    /* ─── LOCATIONS ────────────────────────────────────── */
+    .location-row {
+      display: grid;
+      grid-template-columns: 58px 1fr auto;
+      align-items: center;
+      gap: 14px;
+      padding: 11px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .location-img {
+      width: 54px;
+      height: 54px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid rgba(37,104,160,0.8);
+      box-shadow: none;
+    }
+    .location-name { color: var(--bright); font-size: 15px; line-height: 1.4; }
+    .location-sub { color: var(--text); font-size: 13px; margin-top: 3px; }
+    .location-pct {
+      font-family: 'Orbitron', sans-serif;
+      color: var(--gold);
+      font-size: 18px;
+      font-weight: 700;
+      text-align: right;
+    }
+    .location-count { color: var(--text); font-size: 13px; text-align: right; margin-top: 2px; }
+
+    /* ─── SHIPS ────────────────────────────────────────── */
+    .ship-row {
+      display: grid;
+      grid-template-columns: 90px 1fr auto;
+      align-items: center;
+      gap: 14px;
+      padding: 9px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .ship-thumb {
+      width: 90px;
+      height: 52px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+    .ship-thumb img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+      filter: drop-shadow(0 0 4px rgba(176,138,40,0.2));
+      mix-blend-mode: screen;
+    }
+    .ship-name { color: var(--bright); font-size: 15px; }
+    .ship-count { color: var(--text); font-size: 13px; margin-top: 3px; }
+    .ship-pct {
+      font-family: 'Orbitron', sans-serif;
+      color: var(--gold);
+      font-size: 18px;
+      font-weight: 700;
+      text-align: right;
+      text-shadow: none;
+    }
+
+    /* ─── COMMODITIES ──────────────────────────────────── */
+    .commodity-row {
+      display: grid;
+      grid-template-columns: 230px minmax(0,1fr) 72px;
+      align-items: center;
+      gap: 16px;
+      padding: 9px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .commodity-name { color: var(--bright); font-size: 15px; }
+    .commodity-bar-wrap {
+      background: var(--bg3);
+      height: 10px;
+      border-radius: 5px;
+      overflow: hidden;
+    }
+    .commodity-bar {
+      height: 100%;
+      border-radius: 5px;
+      background: linear-gradient(to right, var(--red), var(--red2));
+      box-shadow: none;
+    }
+    .commodity-pct {
+      font-family: 'Orbitron', sans-serif;
+      color: var(--gold);
+      font-size: 18px;
+      font-weight: 700;
+      text-align: right;
+    }
+
+    /* ─── BIGGEST SCORE ────────────────────────────────── */
+    .biggest-score {
+      background: var(--bg2);
+      border: 1px solid var(--yellow);
+      box-shadow: none;
+      padding: 26px 30px;
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      gap: 28px;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .biggest-score::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(
+        45deg,
+        transparent, transparent 6px,
+        rgba(28,78,120,0.03) 6px, rgba(28,78,120,0.03) 12px
+      );
+    }
+    /* corner brackets */
+    .biggest-score::after {
+      content: '';
+      position: absolute;
+      top: 8px; right: 8px;
+      width: 20px; height: 20px;
+      border-top: 2px solid var(--yellow);
+      border-right: 2px solid var(--yellow);
+    }
+    .score-skull { font-size: 54px; opacity: 0.5; }
+    .score-label {
+      font-size: 13px; letter-spacing: 4px;
+      color: var(--text); text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+    .score-amount {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 36px; font-weight: 900;
+      color: var(--yellow);
+      text-shadow: none;
+    }
+    .score-amount-unit {
+      font-size: 18px;
+      font-weight: 400;
+      letter-spacing: 2px;
+      opacity: 0.75;
+    }
+    .score-details {
+      display: flex; gap: 36px; margin-top: 14px; flex-wrap: wrap;
+    }
+    .score-detail-label {
+      font-size: 13px; letter-spacing: 2px;
+      color: var(--text); text-transform: uppercase;
+    }
+    .score-detail-value { color: var(--bright); font-size: 16px; margin-top: 3px; }
+
+    .score-ship-thumb {
+      width: 220px; height: 130px;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .score-ship-thumb img {
+      max-width: 100%; max-height: 100%;
+      object-fit: contain;
+      filter: drop-shadow(0 0 6px rgba(176,138,40,0.2));
+      mix-blend-mode: screen;
+    }
+
+    /* ─── FUN FACTS ────────────────────────────────────── */
+    .fun-facts {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--red);
+      padding: 22px 28px;
+    }
+    .fun-fact-item {
+      display: flex;
+      gap: 16px;
+      padding: 11px 0;
+      border-bottom: 1px solid var(--border);
+      align-items: flex-start;
+    }
+    .fun-fact-item:last-child { border-bottom: none; }
+    .fun-fact-bullet {
+      color: var(--red2);
+      font-size: 18px;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .fun-fact-text {
+      color: var(--text);
+      font-size: 16px;
+      line-height: 1.65;
+    }
+    .fun-fact-text strong { color: var(--bright); }
+
+    /* ─── FOOTER ───────────────────────────────────────── */
+    .footer {
+      margin-top: 28px;
+      padding-top: 16px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: var(--text);
+      font-size: 11px;
+      letter-spacing: 2px;
+    }
+    .footer span { text-transform: uppercase; }
+  </style>
+</head>
+<body>
+
+  <!-- ══ HEADER ════════════════════════════════════════════ -->
+  <div class="header stripes">
+    <img src="../Assets/sb_logo_intro.png" alt="SnareBears" class="logo">
+    <div class="header-center">
+      <div class="header-eyebrow">Black Ledger Report</div>
+      <div class="header-title">PATCH 4.2 / 4.2.1</div>
+      <div class="header-sub">
+        <span>Jun 20, 2025</span> — <span>Aug 12, 2025</span>
+        &nbsp;·&nbsp; ~7 WEEKS &nbsp;·&nbsp; STANTON SYSTEM
+      </div>
+    </div>
+    <div class="header-skull">☠</div>
+  </div>
+
+  <!-- ══ AT A GLANCE ═══════════════════════════════════════ -->
+  <div class="stats-row">
+    <div class="stat-card">
+      <div class="stat-value">54</div>
+      <div class="stat-label">Total Hits</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value">45.5M</div>
+      <div class="stat-label">aUEC Plundered</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value">15+</div>
+      <div class="stat-label">Active Raiders</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value">100%</div>
+      <div class="stat-label">Stanton System</div>
+    </div>
+  </div>
+
+  <!-- ══ TOP PLUNDERERS ════════════════════════════════════ -->
+  <div class="section">
+    <div class="section-title">Top Plunderers — Sorted by Total Value</div>
+
+    <div class="plunderer-row">
+      <div class="plunderer-rank">#1</div>
+      <div class="plunderer-name">Ma6num</div>
+      <div class="plunderer-raids">37 hits</div>
+      <div class="bar-wrap"><div class="bar-fill" style="width:100%"></div></div>
+      <div class="plunderer-value">34,982,321 aUEC</div>
+    </div>
+    <div class="plunderer-row">
+      <div class="plunderer-rank">#2</div>
+      <div class="plunderer-name">wardawg</div>
+      <div class="plunderer-raids">39 hits</div>
+      <div class="bar-wrap"><div class="bar-fill" style="width:92.5%"></div></div>
+      <div class="plunderer-value">32,346,050 aUEC</div>
+    </div>
+    <div class="plunderer-row">
+      <div class="plunderer-rank">#3</div>
+      <div class="plunderer-name">Inmate1776</div>
+      <div class="plunderer-raids">18 hits</div>
+      <div class="bar-wrap"><div class="bar-fill" style="width:58.8%"></div></div>
+      <div class="plunderer-value">20,553,619 aUEC</div>
+    </div>
+  </div>
+
+  <!-- ══ LOCATIONS + SHIPS ═════════════════════════════════ -->
+  <div class="two-col">
+
+    <!-- LOCATIONS -->
+    <div class="section">
+      <div class="section-title">Top Hunting Grounds</div>
+
+      <div class="location-row">
+        <img src="../sc-locations/Stanton/Planets/Crusader.jpg" class="location-img" alt="Crusader">
+        <div>
+          <div class="location-name">Crusader</div>
+          <div class="location-sub">Gas Giant · Stanton II · Stanton</div>
+        </div>
+        <div>
+          <div class="location-pct">40.7%</div>
+          <div class="location-count">22 hits</div>
+        </div>
+      </div>
+
+      <div class="location-row">
+        <img src="../sc-locations/Stanton/Moons/Cellin.jpg" class="location-img" alt="Cellin">
+        <div>
+          <div class="location-name">Terra Mills HydroFarm</div>
+          <div class="location-sub">Cellin · Moon of Crusader · Stanton</div>
+        </div>
+        <div>
+          <div class="location-pct">33.3%</div>
+          <div class="location-count">18 hits</div>
+        </div>
+      </div>
+
+      <div class="location-row">
+        <img src="../sc-locations/Stanton/Moons/Yela.jpg" class="location-img" alt="Yela">
+        <div>
+          <div class="location-name">Yela</div>
+          <div class="location-sub">Moon of Crusader · Stanton</div>
+        </div>
+        <div>
+          <div class="location-pct">7.4%</div>
+          <div class="location-count">4 hits</div>
+        </div>
+      </div>
+
+      <div class="location-row">
+        <div style="width:54px;height:54px;border-radius:50%;border:3px solid rgba(37,104,160,0.8);overflow:hidden;flex-shrink:0;">
+          <img src="../sc-locations/Stanton/Planets/Crusader.jpg" alt="CRU-L1"
+            style="width:100%;height:100%;object-fit:cover;filter:hue-rotate(190deg) saturate(0.35) brightness(0.65);">
+        </div>
+        <div>
+          <div class="location-name">CRU-L1 Ambitious Dream</div>
+          <div class="location-sub">L1 Station · Crusader Orbit · Stanton</div>
+        </div>
+        <div>
+          <div class="location-pct">7.4%</div>
+          <div class="location-count">4 hits</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SHIPS -->
+    <div class="section">
+      <div class="section-title">Favourite Targets — Ship Types</div>
+
+      <div class="ship-row">
+        <div class="ship-thumb">
+          <img src="../sc-ship-topdown-test/Aegis Dynamics/Reclaimer.png" alt="Reclaimer">
+        </div>
+        <div>
+          <div class="ship-name">Reclaimer</div>
+          <div class="ship-count">17 hits · Aegis Dynamics</div>
+        </div>
+        <div class="ship-pct">32.7%</div>
+      </div>
+
+      <div class="ship-row">
+        <div class="ship-thumb">
+          <img src="../sc-ship-topdown-test/Drake Interplanetary/Vulture.png" alt="Vulture">
+        </div>
+        <div>
+          <div class="ship-name">Vulture</div>
+          <div class="ship-count">15 hits · Drake Interplanetary</div>
+        </div>
+        <div class="ship-pct">28.8%</div>
+      </div>
+
+      <div class="ship-row">
+        <div class="ship-thumb">
+          <img src="../sc-ship-topdown-test/M.I.S.C/Starlancer TAC.png" alt="Starlancer TAC">
+        </div>
+        <div>
+          <div class="ship-name">Starlancer TAC</div>
+          <div class="ship-count">3 hits · M.I.S.C</div>
+        </div>
+        <div class="ship-pct">5.8%</div>
+      </div>
+
+      <div class="ship-row">
+        <div class="ship-thumb">
+          <img src="../sc-ship-topdown-test/ARGO Astronautics/Raft.png" alt="RAFT">
+        </div>
+        <div>
+          <div class="ship-name">RAFT</div>
+          <div class="ship-count">2 hits · ARGO Astronautics</div>
+        </div>
+        <div class="ship-pct">3.8%</div>
+      </div>
+
+      <div class="ship-row">
+        <div class="ship-thumb">
+          <img src="../sc-ship-topdown-test/M.I.S.C/Starlancer MAX.png" alt="Starlancer MAX">
+        </div>
+        <div>
+          <div class="ship-name">Starlancer MAX</div>
+          <div class="ship-count">2 hits · M.I.S.C</div>
+        </div>
+        <div class="ship-pct">3.8%</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ══ HOTTEST COMMODITIES ═══════════════════════════════ -->
+  <div class="section">
+    <div class="section-title">Hottest Commodities</div>
+    <div class="section-subtitle">Of 60 total commodity-type instances across all hits</div>
+
+    <div class="commodity-row">
+      <div class="commodity-name">Recycled Mat. Composite</div>
+      <div class="commodity-bar-wrap"><div class="commodity-bar" style="width:63.3%"></div></div>
+      <div class="commodity-pct">63.3%</div>
+    </div>
+    <div class="commodity-row">
+      <div class="commodity-name">Gold</div>
+      <div class="commodity-bar-wrap"><div class="commodity-bar" style="width:10%"></div></div>
+      <div class="commodity-pct">10.0%</div>
+    </div>
+    <div class="commodity-row">
+      <div class="commodity-name">Fresh Food</div>
+      <div class="commodity-bar-wrap"><div class="commodity-bar" style="width:10%"></div></div>
+      <div class="commodity-pct">10.0%</div>
+    </div>
+    <div class="commodity-row">
+      <div class="commodity-name">Construction Materials</div>
+      <div class="commodity-bar-wrap"><div class="commodity-bar" style="width:8.3%"></div></div>
+      <div class="commodity-pct">8.3%</div>
+    </div>
+    <div class="commodity-row">
+      <div class="commodity-name">Bioplastic</div>
+      <div class="commodity-bar-wrap"><div class="commodity-bar" style="width:3.3%"></div></div>
+      <div class="commodity-pct">3.3%</div>
+    </div>
+  </div>
+
+  <!-- ══ BIGGEST SCORE ══════════════════════════════════════ -->
+  <div class="section">
+    <div class="section-title">Biggest Score</div>
+    <div class="biggest-score">
+      <div class="score-skull">☠</div>
+      <div>
+        <div class="score-label">Top Haul of the Patch</div>
+        <div class="score-amount">3,547,000 <span class="score-amount-unit">aUEC</span></div>
+        <div class="score-details">
+          <div class="score-detail">
+            <div class="score-detail-label">Target</div>
+            <div class="score-detail-value">TrystynVex</div>
+          </div>
+          <div class="score-detail">
+            <div class="score-detail-label">Ship</div>
+            <div class="score-detail-value">Polaris</div>
+          </div>
+          <div class="score-detail">
+            <div class="score-detail-label">Location</div>
+            <div class="score-detail-value">MicroTech (Stanton IV)</div>
+          </div>
+          <div class="score-detail">
+            <div class="score-detail-label">Commodities</div>
+            <div class="score-detail-value">Fresh Food</div>
+          </div>
+          <div class="score-detail">
+            <div class="score-detail-label">Crew</div>
+            <div class="score-detail-value">Hecko &nbsp;·&nbsp; Chief_Scuff &nbsp;·&nbsp; wardawg &nbsp;·&nbsp; Ma6num</div>
+          </div>
+        </div>
+      </div>
+      <div class="score-ship-thumb">
+        <img src="../sc-ship-topdown-test/Roberts Space Industries/Polaris.png" alt="Polaris">
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ FUN FACTS ═════════════════════════════════════════ -->
+  <div class="section">
+    <div class="section-title">Fun Facts</div>
+    <div class="fun-facts">
+
+      <div class="fun-fact-item">
+        <div class="fun-fact-bullet">▸</div>
+        <div class="fun-fact-text">
+          <strong>4.2 was almost entirely a Stanton patch</strong> — all top 4 hunting grounds
+          were in the Stanton system. Crusader and its moons (Cellin, Yela) plus CRU-L1
+          accounted for <strong>88.9%</strong> of all hits.
+        </div>
+      </div>
+
+      <div class="fun-fact-item">
+        <div class="fun-fact-bullet">▸</div>
+        <div class="fun-fact-text">
+          <strong>RMC farming was the dominant target economy</strong> — Recycled Material Composite
+          made up <strong>63.3%</strong> of all stolen commodity instances, the highest concentration
+          of any single commodity across all patches tracked.
+        </div>
+      </div>
+
+      <div class="fun-fact-item">
+        <div class="fun-fact-bullet">▸</div>
+        <div class="fun-fact-text">
+          <strong>Reclaimer + Vulture = 61.5%</strong> of all hits with a known ship type —
+          RMC salvagers were firmly in the crosshairs this patch.
+        </div>
+      </div>
+
+      <div class="fun-fact-item">
+        <div class="fun-fact-bullet">▸</div>
+        <div class="fun-fact-text">
+          <strong>Ma6num narrowly edged wardawg</strong> in total value (<strong>34.9M</strong> vs <strong>32.3M</strong>)
+          despite having 2 fewer hits — quality over quantity in full effect.
+        </div>
+      </div>
+
+      <div class="fun-fact-item">
+        <div class="fun-fact-bullet">▸</div>
+        <div class="fun-fact-text">
+          <strong>4.2's biggest score (3.5M aUEC)</strong> was the lowest single-hit haul across
+          all patches tracked — consistent with the lower-value RMC-heavy economy that defined this era.
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ══ FOOTER ════════════════════════════════════════════ -->
+  <div class="footer">
+    <span>☠ Snare Bears — Piracy Operations</span>
+    <span>Generated: 2026-03-20 &nbsp;·&nbsp; Source: SnareBears_booty_4.2_4.2.1.json</span>
+  </div>
+
+</body>
+</html>

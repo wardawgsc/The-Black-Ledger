@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>SnareBears — Patch 4.5 Booty Report</title>
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg:        #07090f;
+      --bg2:       #0c1020;
+      --bg3:       #111828;
+      --bg4:       #181e2e;
+      --red:       #1c4e78;
+      --red2:      #2568a0;
+      --red-dim:   rgba(28,78,120,0.15);
+      --gold:      #b08a28;
+      --gold2:     #b08a28;
+      --yellow:    #b08a28;
+      --text:      #7a9ab8;
+      --bright:    #c8dce8;
+      --dim:       #3a5068;
+      --border:    #141e2c;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Share Tech Mono', 'Courier New', monospace;
+      width: 1200px;
+      margin: 0 auto;
+      padding: 36px 40px;
+      position: relative;
+    }
+
+    /* Subtle scanline texture */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: repeating-linear-gradient(
+        0deg,
+        transparent 0px, transparent 3px,
+        rgba(0,0,0,0.08) 3px, rgba(0,0,0,0.08) 4px
+      );
+      pointer-events: none;
+      z-index: 9999;
+    }
+
+    .stripes {
+      background-image: repeating-linear-gradient(
+        45deg,
+        transparent,
+        transparent 4px,
+        rgba(28,78,120,0.04) 4px,
+        rgba(28,78,120,0.04) 8px
+      );
+    }
+
+    /* ─── HEADER ───────────────────────────────────────── */
+    .header {
+      display: flex;
+      align-items: center;
+      gap: 30px;
+      padding-bottom: 28px;
+      margin-bottom: 28px;
+      border-bottom: 1px solid var(--border);
+      position: relative;
+    }
+    .header::after {
+      content: '';
+      position: absolute;
+      bottom: -1px; left: 0;
+      width: 60%;
+      height: 1px;
+      background: linear-gradient(to right, var(--gold), transparent);
+    }
+
+    .logo {
+      width: 110px;
+      height: auto;
+      filter: drop-shadow(0 0 10px rgba(28,78,120,0.5));
+      flex-shrink: 0;
+    }
+
+    .header-center { flex: 1; }
+    .header-eyebrow {
+      font-size: 16px;
+      letter-spacing: 5px;
+      color: var(--text);
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    .header-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 38px;
+      font-weight: 900;
+      color: var(--bright);
+      letter-spacing: 3px;
+      line-height: 1;
+    }
+    .header-sub {
+      font-size: 13px;
+      letter-spacing: 3px;
+      color: var(--text);
+      margin-top: 10px;
+    }
+    .header-sub span { color: var(--yellow); }
+
+    .header-skull {
+      font-size: 100px;
+      line-height: 1;
+      opacity: 0.07;
+      position: absolute;
+      right: 0; top: -10px;
+      user-select: none;
+    }
+
+    /* ─── STATS ROW ────────────────────────────────────── */
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      margin-bottom: 28px;
+    }
+    .stat-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-top: 2px solid var(--red);
+      padding: 18px 16px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .stat-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(150deg, rgba(28,78,120,0.10) 0%, transparent 55%);
+    }
+    .stat-value {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 30px;
+      font-weight: 700;
+      color: var(--bright);
+      line-height: 1.1;
+    }
+    .stat-label {
+      font-size: 12px;
+      letter-spacing: 3px;
+      color: var(--text);
+      text-transform: uppercase;
+      margin-top: 6px;
+    }
+
+    /* ─── SECTION HEADERS ──────────────────────────────── */
+    .section { margin-bottom: 28px; }
+    .section-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 13px;
+      letter-spacing: 4px;
+      color: var(--bright);
+      text-transform: uppercase;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .section-title::before { content: '▸'; color: var(--red); font-size: 14px; }
+    .section-subtitle {
+      font-size: 13px;
+      letter-spacing: 2px;
+      color: var(--text);
+      margin-bottom: 12px;
+      text-transform: uppercase;
+    }
+
+    /* ─── PLUNDERERS ───────────────────────────────────── */
+    .plunderer-row {
+      display: grid;
+      grid-template-columns: 32px 1fr 100px minmax(0,1fr) 240px;
+      align-items: center;
+      gap: 16px;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .plunderer-rank {
+      font-family: 'Orbitron', sans-serif;
+      color: var(--yellow);
+      font-size: 16px;
+      font-weight: 700;
+    }
+    .plunderer-name { color: var(--bright); font-size: 15px; }
+    .plunderer-raids { color: var(--text); font-size: 13px; text-align: right; }
+    .bar-wrap {
+      background: var(--bg3);
+      height: 8px;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    .bar-fill {
+      height: 100%;
+      border-radius: 4px;
+      background: linear-gradient(to right, var(--red), var(--red2));
+    }
+    .plunderer-value {
+      color: var(--yellow);
+      font-size: 17px;
+      text-align: right;
+    }
+
+    /* ─── TWO COLUMN ───────────────────────────────────── */
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 28px;
+      margin-bottom: 28px;
+    }
+
+    /* ─── LOCATIONS ────────────────────────────────────── */
+    .location-row {
+      display: grid;
+      grid-template-columns: 58px 1fr auto;
+      align-items: center;
+      gap: 14px;
+      padding: 11px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .location-img {
+      width: 54px;
+      height: 54px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid rgba(37,104,160,0.8);
+    }
+    .location-name { color: var(--bright); font-size: 15px; line-height: 1.4; }
+    .location-sub { color: var(--text); font-size: 13px; margin-top: 3px; }
+    .location-pct {
+      font-family: 'Orbitron', sans-serif;
+      color: var(--gold);
+      font-size: 18px;
+      font-weight: 700;
+      text-align: right;
+    }
+    .location-count { color: var(--text); font-size: 13px; text-align: right; margin-top: 2px; }
+
+    /* ─── SHIPS ────────────────────────────────────────── */
+    .ship-row {
+      display: grid;
+      grid-template-columns: 90px 1fr auto;
+      align-items: center;
+      gap: 14px;
+      padding: 9px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .ship-thumb {
+      width: 90px;
+      height: 52px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+    .ship-thumb img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+      filter: drop-shadow(0 0 4px rgba(176,138,40,0.2));
+      mix-blend-mode: screen;
+    }
+    .ship-name { color: var(--bright); font-size: 15px; }
+    .ship-count { color: var(--text); font-size: 13px; margin-top: 3px; }
+    .ship-pct {
+      font-family: 'Orbitron', sans-serif;
+      color: var(--gold);
+      font-size: 18px;
+      font-weight: 700;
+      text-align: right;
+    }
+
+    /* ─── COMMODITIES ──────────────────────────────────── */
+    .commodity-row {
+      display: grid;
+      grid-template-columns: 230px minmax(0,1fr) 72px;
+      align-items: center;
+      gap: 16px;
+      padding: 9px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .commodity-name { color: var(--bright); font-size: 15px; }
+    .commodity-bar-wrap {
+      background: var(--bg3);
+      height: 10px;
+      border-radius: 5px;
+      overflow: hidden;
+    }
+    .commodity-bar {
+      height: 100%;
+      border-radius: 5px;
+      background: linear-gradient(to right, var(--red), var(--red2));
+    }
+    .commodity-pct {
+      font-family: 'Orbitron', sans-serif;
+      color: var(--gold);
+      font-size: 18px;
+      font-weight: 700;
+      text-align: right;
+    }
+
+    /* ─── BIGGEST SCORE ────────────────────────────────── */
+    .biggest-score {
+      background: var(--bg2);
+      border: 1px solid var(--yellow);
+      padding: 26px 30px;
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      gap: 28px;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .biggest-score::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(
+        45deg,
+        transparent, transparent 6px,
+        rgba(28,78,120,0.03) 6px, rgba(28,78,120,0.03) 12px
+      );
+    }
+    .biggest-score::after {
+      content: '';
+      position: absolute;
+      top: 8px; right: 8px;
+      width: 20px; height: 20px;
+      border-top: 2px solid var(--yellow);
+      border-right: 2px solid var(--yellow);
+    }
+    .score-skull { font-size: 54px; opacity: 0.5; }
+    .score-label {
+      font-size: 13px; letter-spacing: 4px;
+      color: var(--text); text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+    .score-amount {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 36px; font-weight: 900;
+      color: var(--yellow);
+    }
+    .score-amount-unit {
+      font-size: 18px;
+      font-weight: 400;
+      letter-spacing: 2px;
+      opacity: 0.75;
+    }
+    .score-details {
+      display: flex; gap: 36px; margin-top: 14px; flex-wrap: wrap;
+    }
+    .score-detail-label {
+      font-size: 13px; letter-spacing: 2px;
+      color: var(--text); text-transform: uppercase;
+    }
+    .score-detail-value { color: var(--bright); font-size: 16px; margin-top: 3px; }
+
+    .score-ship-thumb {
+      width: 220px; height: 130px;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .score-ship-thumb img {
+      max-width: 100%; max-height: 100%;
+      object-fit: contain;
+      filter: drop-shadow(0 0 6px rgba(176,138,40,0.2));
+      mix-blend-mode: screen;
+    }
+
+    /* ─── FUN FACTS ────────────────────────────────────── */
+    .fun-facts {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--red);
+      padding: 22px 28px;
+    }
+    .fun-fact-item {
+      display: flex;
+      gap: 16px;
+      padding: 11px 0;
+      border-bottom: 1px solid var(--border);
+      align-items: flex-start;
+    }
+    .fun-fact-item:last-child { border-bottom: none; }
+    .fun-fact-bullet {
+      color: var(--red2);
+      font-size: 18px;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .fun-fact-text {
+      color: var(--text);
+      font-size: 16px;
+      line-height: 1.65;
+    }
+    .fun-fact-text strong { color: var(--bright); }
+
+    /* ─── FOOTER ───────────────────────────────────────── */
+    .footer {
+      margin-top: 28px;
+      padding-top: 16px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: var(--text);
+      font-size: 11px;
+      letter-spacing: 2px;
+    }
+    .footer span { text-transform: uppercase; }
+  </style>
+</head>
+<body>
+
+  <!-- ══ HEADER ════════════════════════════════════════════ -->
+  <div class="header stripes">
+    <img src="../Assets/sb_logo_intro.png" alt="SnareBears" class="logo">
+    <div class="header-center">
+      <div class="header-eyebrow">Black Ledger Report</div>
+      <div class="header-title">PATCH 4.5</div>
+      <div class="header-sub">
+        <span>Dec 19, 2025</span> — <span>Jan 28, 2026</span>
+        &nbsp;·&nbsp; ~40 DAYS &nbsp;·&nbsp; PYRO SYSTEM
+      </div>
+    </div>
+    <div class="header-skull">☠</div>
+  </div>
+
+  <!-- ══ AT A GLANCE ═══════════════════════════════════════ -->
+  <div class="stats-row">
+    <div class="stat-card">
+      <div class="stat-value">55</div>
+      <div class="stat-label">Total Hits</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value">121.2M</div>
+      <div class="stat-label">aUEC Plundered</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value">14</div>
+      <div class="stat-label">Active Raiders</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value">ALL PYRO</div>
+      <div class="stat-label">Operations Focus</div>
+    </div>
+  </div>
+
+  <!-- ══ TOP PLUNDERERS ════════════════════════════════════ -->
+  <div class="section">
+    <div class="section-title">Top Plunderers — Sorted by Total Value</div>
+
+    <div class="plunderer-row">
+      <div class="plunderer-rank">#1</div>
+      <div class="plunderer-name">Barecgesh</div>
+      <div class="plunderer-raids">30 hits</div>
+      <div class="bar-wrap"><div class="bar-fill" style="width:100%"></div></div>
+      <div class="plunderer-value">65,069,902 aUEC</div>
+    </div>
+    <div class="plunderer-row">
+      <div class="plunderer-rank">#2</div>
+      <div class="plunderer-name">Syzyf</div>
+      <div class="plunderer-raids">27 hits</div>
+      <div class="bar-wrap"><div class="bar-fill" style="width:91.9%"></div></div>
+      <div class="plunderer-value">59,825,902 aUEC</div>
+    </div>
+    <div class="plunderer-row">
+      <div class="plunderer-rank">#3</div>
+      <div class="plunderer-name">wardawg</div>
+      <div class="plunderer-raids">22 hits</div>
+      <div class="bar-wrap"><div class="bar-fill" style="width:88.9%"></div></div>
+      <div class="plunderer-value">57,875,570 aUEC</div>
+    </div>
+  </div>
+
+  <!-- ══ LOCATIONS + SHIPS ═════════════════════════════════ -->
+  <div class="two-col">
+
+    <!-- LOCATIONS -->
+    <div class="section">
+      <div class="section-title">Top Hunting Grounds</div>
+
+      <div class="location-row">
+        <img src="../sc-locations/Pyro/Planets/Bloom.jpg" class="location-img" alt="Bloom">
+        <div>
+          <div class="location-name">Bueno Ravine</div>
+          <div class="location-sub">Bloom · Pyro III · Pyro</div>
+        </div>
+        <div>
+          <div class="location-pct">16.4%</div>
+          <div class="location-count">9 hits</div>
+        </div>
+      </div>
+
+      <div class="location-row">
+        <img src="../sc-locations/Pyro/Planets/Pyro I.jpg" class="location-img" alt="Pyro I">
+        <div>
+          <div class="location-name">Rustville</div>
+          <div class="location-sub">Pyro I · Planet · Pyro</div>
+        </div>
+        <div>
+          <div class="location-pct">16.4%</div>
+          <div class="location-count">9 hits</div>
+        </div>
+      </div>
+
+      <div class="location-row">
+        <div style="width:54px;height:54px;border-radius:50%;border:3px solid rgba(37,104,160,0.8);overflow:hidden;flex-shrink:0;">
+          <img src="../sc-locations/Pyro/Planets/Bloom.jpg" alt="Bloom (Golden Riviera)"
+            style="width:100%;height:100%;object-fit:cover;filter:hue-rotate(30deg) saturate(1.3) brightness(0.75);">
+        </div>
+        <div>
+          <div class="location-name">The Golden Riviera</div>
+          <div class="location-sub">Bloom · Pyro III · Pyro</div>
+        </div>
+        <div>
+          <div class="location-pct">10.9%</div>
+          <div class="location-count">6 hits</div>
+        </div>
+      </div>
+
+      <div class="location-row">
+        <img src="../sc-locations/Pyro/Planets/Pyro IV.jpg" class="location-img" alt="Pyro IV">
+        <div>
+          <div class="location-name">Sacren's Plot</div>
+          <div class="location-sub">Pyro IV · Planet · Pyro</div>
+        </div>
+        <div>
+          <div class="location-pct">9.1%</div>
+          <div class="location-count">5 hits</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SHIPS -->
+    <div class="section">
+      <div class="section-title">Favourite Targets — Ship Types</div>
+      <div class="section-subtitle">Of 50 hits with identified ship type</div>
+
+      <div class="ship-row">
+        <div class="ship-thumb">
+          <img src="../sc-ship-topdown-test/Crusader Industries/C2 Hercules.png" alt="C2 Hercules">
+        </div>
+        <div>
+          <div class="ship-name">C2 Hercules Starlifter</div>
+          <div class="ship-count">11 hits · Crusader Industries</div>
+        </div>
+        <div class="ship-pct">22.0%</div>
+      </div>
+
+      <div class="ship-row">
+        <div class="ship-thumb">
+          <img src="../sc-ship-topdown-test/ARGO Astronautics/Raft.png" alt="RAFT">
+        </div>
+        <div>
+          <div class="ship-name">RAFT</div>
+          <div class="ship-count">6 hits · ARGO Astronautics</div>
+        </div>
+        <div class="ship-pct">12.0%</div>
+      </div>
+
+      <div class="ship-row">
+        <div class="ship-thumb">
+          <img src="../sc-ship-topdown-test/Roberts Space Industries/Zeus MK II CL.png" alt="Zeus MK II CL">
+        </div>
+        <div>
+          <div class="ship-name">Zeus Mk II CL</div>
+          <div class="ship-count">4 hits · Roberts Space Industries</div>
+        </div>
+        <div class="ship-pct">8.0%</div>
+      </div>
+
+      <div class="ship-row">
+        <div class="ship-thumb">
+          <img src="../sc-ship-topdown-test/Roberts Space Industries/Constellation Taurus.png" alt="Constellation Taurus">
+        </div>
+        <div>
+          <div class="ship-name">Constellation Taurus</div>
+          <div class="ship-count">4 hits · Roberts Space Industries</div>
+        </div>
+        <div class="ship-pct">8.0%</div>
+      </div>
+
+      <div class="ship-row">
+        <div class="ship-thumb">
+          <img src="../sc-ship-topdown-test/Crusader Industries/Spirit C1.png" alt="Spirit C1">
+        </div>
+        <div>
+          <div class="ship-name">C1 Spirit</div>
+          <div class="ship-count">4 hits · Crusader Industries</div>
+        </div>
+        <div class="ship-pct">8.0%</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ══ HOTTEST COMMODITIES ═══════════════════════════════ -->
+  <div class="section">
+    <div class="section-title">Hottest Commodities</div>
+    <div class="section-subtitle">Of 60 total commodity-type instances across all hits</div>
+
+    <div class="commodity-row">
+      <div class="commodity-name">Bexalite</div>
+      <div class="commodity-bar-wrap"><div class="commodity-bar" style="width:100%"></div></div>
+      <div class="commodity-pct">20.0%</div>
+    </div>
+    <div class="commodity-row">
+      <div class="commodity-name">Neon</div>
+      <div class="commodity-bar-wrap"><div class="commodity-bar" style="width:58.3%"></div></div>
+      <div class="commodity-pct">11.7%</div>
+    </div>
+    <div class="commodity-row">
+      <div class="commodity-name">Atlasium</div>
+      <div class="commodity-bar-wrap"><div class="commodity-bar" style="width:41.7%"></div></div>
+      <div class="commodity-pct">8.3%</div>
+    </div>
+    <div class="commodity-row">
+      <div class="commodity-name">Construction Materials</div>
+      <div class="commodity-bar-wrap"><div class="commodity-bar" style="width:41.7%"></div></div>
+      <div class="commodity-pct">8.3%</div>
+    </div>
+    <div class="commodity-row">
+      <div class="commodity-name">Recycled Mat. Composite</div>
+      <div class="commodity-bar-wrap"><div class="commodity-bar" style="width:33.3%"></div></div>
+      <div class="commodity-pct">6.7%</div>
+    </div>
+  </div>
+
+  <!-- ══ BIGGEST SCORE ══════════════════════════════════════ -->
+  <div class="section">
+    <div class="section-title">Biggest Score</div>
+    <div class="biggest-score">
+      <div class="score-skull">☠</div>
+      <div>
+        <div class="score-label">Top Haul of the Patch</div>
+        <div class="score-amount">17,683,000 <span class="score-amount-unit">aUEC</span></div>
+        <div class="score-details">
+          <div class="score-detail">
+            <div class="score-detail-label">Targets</div>
+            <div class="score-detail-value">JulianINF &nbsp;·&nbsp; Frisches-Toast &nbsp;·&nbsp; WeissIchNicht</div>
+          </div>
+          <div class="score-detail">
+            <div class="score-detail-label">Ship</div>
+            <div class="score-detail-value">C2 Hercules Starlifter</div>
+          </div>
+          <div class="score-detail">
+            <div class="score-detail-label">Location</div>
+            <div class="score-detail-value">Rustville (Pyro I)</div>
+          </div>
+          <div class="score-detail">
+            <div class="score-detail-label">Commodities</div>
+            <div class="score-detail-value">Atlasium &nbsp;·&nbsp; Dymantium &nbsp;·&nbsp; Neon</div>
+          </div>
+          <div class="score-detail">
+            <div class="score-detail-label">Crew</div>
+            <div class="score-detail-value">DA-1220-VE &nbsp;·&nbsp; wardawg &nbsp;·&nbsp; SC-2505-IE &nbsp;·&nbsp; A_SPACE_RAT &nbsp;·&nbsp; Eeldar</div>
+          </div>
+        </div>
+      </div>
+      <div class="score-ship-thumb">
+        <img src="../sc-ship-topdown-test/Crusader Industries/C2 Hercules.png" alt="C2 Hercules Starlifter">
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ FUN FACTS ═════════════════════════════════════════ -->
+  <div class="section">
+    <div class="section-title">Fun Facts</div>
+    <div class="fun-facts">
+
+      <div class="fun-fact-item">
+        <div class="fun-fact-bullet">▸</div>
+        <div class="fun-fact-text">
+          <strong>The biggest hit alone was worth 14.6% of the entire patch</strong> — the
+          17.6M Rustville score was so dominant it skews the whole ledger. One job, one-seventh
+          of all value stolen.
+        </div>
+      </div>
+
+      <div class="fun-fact-item">
+        <div class="fun-fact-bullet">▸</div>
+        <div class="fun-fact-text">
+          <strong>Hydrosol was robbed twice in a single session</strong> (Dec 22) — refilled
+          his RAFT and came right back. Combined loss: <strong>7,631,000 aUEC</strong>. Some
+          lessons cost extra.
+        </div>
+      </div>
+
+      <div class="fun-fact-item">
+        <div class="fun-fact-bullet">▸</div>
+        <div class="fun-fact-text">
+          <strong>Bueno Ravine and Rustville tied at the top</strong> — 9 hits each, together
+          accounting for <strong>32.7%</strong> of all 4.5 activity. The Bears owned both ends
+          of Pyro.
+        </div>
+      </div>
+
+      <div class="fun-fact-item">
+        <div class="fun-fact-bullet">▸</div>
+        <div class="fun-fact-text">
+          <strong>Barecgesh and Syzyf were the dominant duo</strong> — operating together
+          across most Bueno Ravine and Golden Riviera hits. Their combined total: <strong>124.9M aUEC</strong>,
+          more than the entire 4.5 patch value on its own.
+        </div>
+      </div>
+
+      <div class="fun-fact-item">
+        <div class="fun-fact-bullet">▸</div>
+        <div class="fun-fact-text">
+          <strong>4.5 was a full Pyro patch</strong> — every single top location was in the
+          Pyro system. The transition from Stanton that began in 4.3 was complete.
+          The Bears have gone native.
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ══ FOOTER ════════════════════════════════════════════ -->
+  <div class="footer">
+    <span>☠ Snare Bears — Piracy Operations</span>
+    <span>Generated: 2026-03-20 &nbsp;·&nbsp; Source: SnareBears_booty_4.5.json</span>
+  </div>
+
+</body>
+</html>

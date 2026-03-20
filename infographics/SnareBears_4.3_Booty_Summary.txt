@@ -1,0 +1,90 @@
+╔══════════════════════════════════════════════════════════════════╗
+║       SNARE BEARS  |  PATCH 4.3 / 4.3.1 / 4.3.2  |  BOOTY      ║
+║              Aug 18, 2025  —  Nov 18, 2025  (~3 months)         ║
+╚══════════════════════════════════════════════════════════════════╝
+
+┌─────────────────────────────────────────────────────────────────┐
+│                        AT A GLANCE                              │
+├─────────────────────────────────────────────────────────────────┤
+│   Total Raids:          189                                     │
+│   Total Value Stolen:   229,608,328 aUEC  (~229.6 Million)      │
+│   Active Raiders:       30+ unique plunderers                   │
+│   All Raid Type:        Player-Stolen-Cargo                     │
+└─────────────────────────────────────────────────────────────────┘
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  TOP PLUNDERERS  (by total value)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  1.  wardawg         115 raids  |  157,344,445 aUEC
+  2.  Ma6num           99 raids  |  108,358,825 aUEC
+  3.  DA-1220-VE       44 raids  |   80,736,303 aUEC
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  TOP HUNTING GROUNDS  (# raids)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  1.  Terra Mills HydroFarm       56  (29.6%)   Cellin (moon of Crusader), Stanton
+  2.  Sacren's Plot               22  (11.6%)   Pyro IV, Pyro
+  3.  Crusader                    17  ( 9.0%)   Crusader (gas giant, Stanton II), Stanton
+  4.  CRU-L1 Ambitious Dream      14  ( 7.4%)   L1 Station (Crusader), Stanton
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  FAVOURITE TARGETS  (ship types)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  (of 171 raids with identified ship type)
+  1.  Vulture                   26  (15.2%)
+  2.  RAFT                      23  (13.5%)
+  3.  Constellation Taurus      16  ( 9.4%)
+  4.  Reclaimer                 11  ( 6.4%)
+      Starlancer MAX            11  ( 6.4%)
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  HOTTEST COMMODITIES  (# times stolen)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  (of 271 total commodity-type instances across all raids)
+  1.  Recycled Mat. Composite   52  (19.2%)
+  2.  Bioplastic                29  (10.7%)
+  3.  Partillium                26  ( 9.6%)
+  4.  Fresh Food                22  ( 8.1%)
+  5.  Gold                      17  ( 6.3%)
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  BIGGEST SCORE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  #1    6,732,000 aUEC
+        Target:   Renat_Kazin
+        Ship:     Reclaimer
+        Location: Ruin Station (orbits Terminus/Pyro VI), Pyro
+        Crew:     Ma6num, wardawg, MaydayMaydie, Chief_Scuff
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  FUN FACTS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  • 4.3 was the biggest patch by far — 189 raids, spanning
+    3 sub-patches over ~3 months. That's 4x the raids of 4.4
+    and 3.4x the raids of 4.5.
+
+  • With 229.6M aUEC stolen, 4.3 generated nearly double the
+    value of 4.5 (121.2M) and over 5x the value of 4.4 (41.4M).
+
+  • Terra Mills HydroFarm alone accounted for 29.6% of all raids
+    — nearly 1 in 3 hits happened at a single location in Stanton.
+
+  • wardawg led dominantly: 115 raids and 157M aUEC — more
+    than the entire 4.4 patch value combined (41.4M).
+
+  • The Vulture overtook the C2 Hercules as the #1 targeted ship
+    (26 hits vs 5 in 4.4) — RMC farming paid the price.
+
+  • Recycled Material Composite was stolen in 19.2% of all
+    commodity instances — almost entirely from Vulture and
+    Reclaimer targets at Terra Mills and CRU-L1.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  Generated: 2026-03-20  |  Source: SnareBears_booty_4.3_4.3.1_4.3.2.json
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━

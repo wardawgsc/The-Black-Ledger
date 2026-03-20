@@ -1,0 +1,90 @@
+╔══════════════════════════════════════════════════════════════════╗
+║           SNARE BEARS  |  PATCH 4.5  |  BOOTY REPORT            ║
+║              Dec 19, 2025  —  Jan 28, 2026  (~40 days)          ║
+╚══════════════════════════════════════════════════════════════════╝
+
+┌─────────────────────────────────────────────────────────────────┐
+│                        AT A GLANCE                              │
+├─────────────────────────────────────────────────────────────────┤
+│   Total Raids:          55                                      │
+│   Total Value Stolen:   121,185,522 aUEC  (~121.2 Million)      │
+│   Active Raiders:       14 unique plunderers                    │
+│   Unique Victims:       55 incidents                            │
+│   All Raid Type:        Player-Stolen-Cargo                     │
+└─────────────────────────────────────────────────────────────────┘
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  TOP PLUNDERERS  (by total value)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  1.  Barecgesh       30 raids  |  65,069,902 aUEC
+  2.  Syzyf           27 raids  |  59,825,902 aUEC
+  3.  wardawg         22 raids  |  57,875,570 aUEC
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  TOP HUNTING GROUNDS  (# raids)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  1.  Bueno Ravine          9  (16.4%)   Bloom (Pyro III), Pyro
+  2.  Rustville             9  (16.4%)   Pyro I, Pyro
+  3.  The Golden Riviera    6  (10.9%)   Bloom (Pyro III), Pyro
+  4.  Sacren's Plot         5  ( 9.1%)   Pyro IV, Pyro
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  FAVOURITE TARGETS  (ship types)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  (of 50 raids with identified ship type)
+  1.  C2 Hercules Starlifter    11  (22%)
+  2.  RAFT                       6  (12%)
+  3.  Zeus Mk II CL              4  ( 8%)
+      Constellation Taurus       4  ( 8%)
+      C1 Spirit                  4  ( 8%)
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  HOTTEST COMMODITIES  (# times stolen)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  (of 60 total commodity-type instances across all raids)
+  1.  Bexalite                  12  (20.0%)
+  2.  Neon                       7  (11.7%)
+  3.  Atlasium                   5  ( 8.3%)
+      Construction Materials     5  ( 8.3%)
+  5.  Recycled Mat. Composite    4  ( 6.7%)
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  BIGGEST SCORE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  #1   17,683,000 aUEC
+       Target:   JulianINF, Frisches-Toast, WeissIchNicht
+       Ship:     C2 Hercules Starlifter
+       Location: Rustville
+       Crew:     DA-1220-VE, wardawg, SC-2505-IE, A_SPACE_RAT, Eeldar
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  FUN FACTS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  • Hydrosol was robbed TWICE in the same session (Dec 22) —
+    came back and refilled his RAFT, got robbed again.
+    Combined loss: 7,631,000 aUEC
+
+  • The #1 single raid (17.6M) alone accounts for 14.6%
+    of the entire patch's total value.
+
+  • Bueno Ravine and Rustville tied as the #1 hunting ground
+    with 9 raids each — together accounting for 32.7% of all raids.
+
+  • Bexalite was the most targeted commodity (12 raids),
+    primarily at Bueno Ravine and The Golden Riviera.
+
+  • The C2 Hercules Starlifter was the most pirated ship —
+    targeted 11 times. Carry big cargo, pay the price.
+
+  • Barecgesh + Syzyf duo-operated in the majority of ops,
+    appearing together in most Bueno Ravine / Golden Riviera hits.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  Generated: 2026-03-20  |  Source: SnareBears_booty_4.5.json
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━

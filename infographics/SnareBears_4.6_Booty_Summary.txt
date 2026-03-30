@@ -1,0 +1,61 @@
+╔══════════════════════════════════════════════════════════════════╗
+║           SNARE BEARS  |  PATCH 4.6  |  BOOTY REPORT            ║
+║              Feb 3, 2026  —  Mar 25, 2026  (~7 weeks)           ║
+╚══════════════════════════════════════════════════════════════════╝
+
+┌─────────────────────────────────────────────────────────────────┐
+│                        AT A GLANCE                              │
+├─────────────────────────────────────────────────────────────────┤
+│   Total Raids:          69                                      │
+│   Total Value Stolen:   207,511,046 aUEC  (~207.5 Million)      │
+│   Active Raiders:       17 unique plunderers                    │
+│   Unique Victims:       69 incidents                            │
+│   All Raid Type:        Player-Stolen-Cargo                     │
+└─────────────────────────────────────────────────────────────────┘
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  TOP PLUNDERERS  (by total value)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  1.  Barecgesh       54 raids  |  50,870,697 aUEC
+  2.  wardawg         38 raids  |  40,583,143 aUEC
+  3.  Syzyf           37 raids  |  33,751,397 aUEC
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  TOP HUNTING GROUNDS  (# raids)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  1.  Rustville            12  (20.0%)   Pyro I, Pyro
+  2.  Bueno Ravine         11  (18.3%)   Bloom (Pyro III), Pyro
+  3.  Seer's Canyon         8  (13.3%)   Bloom (Pyro III), Pyro
+  4.  Fallow Field          7  (11.7%)   Bloom (Pyro III), Pyro
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  FAVOURITE TARGETS  (ship types)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  (of top 5 ship types)
+  1.  C2 Hercules Starlifter    8  (13.3%)
+  2.  Hermes                   7  (11.7%)
+  3.  C1 Spirit                6  (10.0%)
+  4.  Constellation Taurus     5  ( 8.3%)
+  5.  RAFT                     5  ( 8.3%)
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  HOTTEST COMMODITIES
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  1.  Bexalite                20.0%
+  2.  Neon                    11.7%
+  3.  Atlasium                8.3%
+  4.  Construction Materials  8.3%
+  5.  Recycled Mat. Composite 6.7%
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  BIGGEST SCORE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  15,658,000 aUEC — Rustville (Pyro I)
+  Targets: bigbossxy · corejak
+  Crew: wardawg · Chief_Scuff · Ma6num · DA-1220-VE · Hecko
+  Commodities: Amioshi Plague · Construction Materials

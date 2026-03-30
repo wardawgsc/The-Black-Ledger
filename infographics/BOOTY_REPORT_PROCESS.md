@@ -38,8 +38,12 @@ $d[0].timestamp; $d[-1].timestamp                                 # date range
 
 ---
 
+
 ### TOP PLUNDERERS
-Show **top 3 only**, **sorted by total aUEC value** (primary sort). Display both **total aUEC value** and **raid count** (sum of raid value for every raid they appeared in — raiders share the full value of each raid they participated in). Note: the top 3 by value may differ from the top 3 by hit count — always re-check both lists.
+Show **top 3 only**, **sorted by total aUEC value (split shares)**. Display both **total aUEC value** and **raid count**.
+
+**Each plunderer’s total is the sum of their share from every hit they participated in:**
+For each hit, the value is split equally among all plunderers listed for that hit.
 
 ```powershell
 # Hit counts
@@ -47,9 +51,13 @@ $pc = @{}
 foreach($e in $d) { $e.plunderers -split ", " | ForEach-Object { $n=$_.Trim(); $pc[$n]=([int]$pc[$n])+1 } }
 $pc.GetEnumerator() | Sort-Object Value -Descending | Select-Object -First 3
 
-# Values
+# Split value shares
 $pv = @{}
-foreach($e in $d) { $e.plunderers -split ", " | ForEach-Object { $n=$_.Trim(); $pv[$n]=$pv[$n]+$e.value } }
+foreach($e in $d) {
+  $names = $e.plunderers -split ", " | ForEach-Object { $_.Trim() }
+  $share = $e.value / $names.Count
+  foreach ($n in $names) { $pv[$n] = $pv[$n] + $share }
+}
 $pv.GetEnumerator() | Sort-Object Value -Descending | Select-Object -First 3
 ```
 

@@ -70,6 +70,9 @@ Inspired by the RSI website (robertsspaceindustries.com) — dark space-navy bac
 | Plunderer name           | 15px  | Mono       | `--bright`  |
 | Plunderer hit count      | 13px  | Mono       | `--text`    |
 | Plunderer value          | 17px  | Mono       | `--gold`    |
+| Raider grid name         | 14px  | Mono 700   | `--bright`  |
+| Raider grid stats        | 11px  | Mono       | `--dim`     |
+| Raider grid value        | 14px  | Orbitron 700 | `--gold`  |
 | Location name            | 15px  | Mono       | `--bright`  |
 | Location sub             | 13px  | Mono       | `--text`    |
 | Location %               | 18px  | Orbitron 700 | `--gold`  |
@@ -94,7 +97,8 @@ Inspired by the RSI website (robertsspaceindustries.com) — dark space-navy bac
 1. **Header** — logo left, title center, skull watermark right
 2. **AT A GLANCE** — 4 stat cards (Total Hits / aUEC Plundered / Active Raiders / System)
 3. **TOP PLUNDERERS** — 5-col grid: rank · name · hit count · bar · value
-4. **LOCATIONS + SHIPS** — 2-column grid side by side
+4. **ACTIVE RAIDER ROSTER** — 3-column micro-card grid of all participants
+5. **LOCATIONS + SHIPS** — 2-column grid side by side
 5. **HOTTEST COMMODITIES** — name · bar · % 3-col grid
 6. **BIGGEST SCORE** — skull · details · ship image 3-col grid
 7. **FUN FACTS** — left-bordered box with bullet items
@@ -121,6 +125,12 @@ Set proportionally to the top earner = 100%. Calculate others as `(value / top_v
 
 ### Ship images
 PNGs with transparent backgrounds. No container background or border — ships float cleanly against the dark page. Uses `mix-blend-mode: screen` on the `<img>`.
+
+### Raider Grid (Patch Totals)
+Introduced in 4.6 to show the full roster beyond the top 3.
+- Container: `.raider-grid` (3-column layout)
+- Card: `.raider-small-card` with `border-left: 2px solid var(--red)`
+- Inner: Flex-spaced name/hits on left, value on right
 
 ### Biggest Score grid
 `grid-template-columns: auto 1fr auto` — skull icon | text content | ship thumbnail (220×130px).

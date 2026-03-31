@@ -217,12 +217,65 @@
       text-shadow: none;
     }
 
+    /* ─── RAIDER GRID (PATCH TOTALS) ───────────────────── */
+    .raider-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-top: 16px;
+    }
+    .raider-small-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      padding: 10px 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: relative;
+    }
+    .raider-small-card::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 2px;
+      background: var(--red);
+    }
+    .raider-small-info {
+      display: flex;
+      flex-direction: column;
+    }
+    .raider-small-name {
+      color: var(--bright);
+      font-size: 14px;
+      font-weight: bold;
+    }
+    .raider-small-stats {
+      color: var(--dim);
+      font-size: 11px;
+      letter-spacing: 1px;
+      margin-top: 2px;
+      text-transform: uppercase;
+    }
+    .raider-small-value {
+      font-family: 'Orbitron', sans-serif;
+      color: var(--gold);
+      font-size: 14px;
+      font-weight: 700;
+    }
+
     /* ─── TWO COLUMN ───────────────────────────────────── */
     .two-col {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 28px;
       margin-bottom: 28px;
+    }
+
+    .hits-list {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 355px; /* Exact height for 5 rows of content (5 * 71px) */
     }
 
     /* ─── LOCATIONS ────────────────────────────────────── */
@@ -261,6 +314,7 @@
       gap: 14px;
       padding: 9px 0;
       border-bottom: 1px solid var(--border);
+      height: 71px; /* 52px image + 18px padding + 1px border */
     }
     .ship-thumb {
       width: 90px;
@@ -493,7 +547,159 @@
         <div class="bar-wrap"><div class="bar-fill" style="width:58.4%"></div></div>
         <div class="plunderer-value">33,611,163 aUEC</div>
       </div>
-  </div>
+
+      <!-- ── Full Raider Roster ── -->
+      <div class="section-subtitle" style="margin-top: 24px; border-bottom: 1px solid var(--border); padding-bottom: 8px;">Active Raiders — Patch Totals</div>
+      <div class="raider-grid">
+        <div class="raider-small-card">
+          <div class="raider-small-info">
+            <div class="raider-small-name">Chief_Scuff</div>
+            <div class="raider-small-stats">68 hits</div>
+          </div>
+          <div class="raider-small-value">22.9M</div>
+        </div>
+        <div class="raider-small-card">
+          <div class="raider-small-info">
+            <div class="raider-small-name">TACtheMENACE</div>
+            <div class="raider-small-stats">31 hits</div>
+          </div>
+          <div class="raider-small-value">10.9M</div>
+        </div>
+        <div class="raider-small-card">
+          <div class="raider-small-info">
+            <div class="raider-small-name">Hecko</div>
+            <div class="raider-small-stats">36 hits</div>
+          </div>
+          <div class="raider-small-value">10.8M</div>
+        </div>
+        <div class="raider-small-card">
+          <div class="raider-small-info">
+            <div class="raider-small-name">Andy</div>
+            <div class="raider-small-stats">13 hits</div>
+          </div>
+          <div class="raider-small-value">9.3M</div>
+        </div>
+        <div class="raider-small-card">
+          <div class="raider-small-info">
+            <div class="raider-small-name">Mirror_Thought</div>
+            <div class="raider-small-stats">21 hits</div>
+          </div>
+          <div class="raider-small-value">6.7M</div>
+        </div>
+        <div class="raider-small-card">
+          <div class="raider-small-info">
+            <div class="raider-small-name">Syzyf</div>
+            <div class="raider-small-stats">12 hits</div>
+          </div>
+          <div class="raider-small-value">6.5M</div>
+        </div>
+        <div class="raider-small-card">
+          <div class="raider-small-info">
+            <div class="raider-small-name">Barecgesh</div>
+            <div class="raider-small-stats">12 hits</div>
+          </div>
+          <div class="raider-small-value">5.8M</div>
+        </div>
+        <div class="raider-small-card">
+          <div class="raider-small-info">
+            <div class="raider-small-name">MaydayMaydie</div>
+            <div class="raider-small-stats">10 hits</div>
+          </div>
+          <div class="raider-small-value">4.0M</div>
+        </div>
+        <div class="raider-small-card">
+          <div class="raider-small-info">
+            <div class="raider-small-name">Baniatoren</div>
+            <div class="raider-small-stats">16 hits</div>
+          </div>
+          <div class="raider-small-value">3.8M</div>
+        </div>
+        <div class="raider-small-card">
+          <div class="raider-small-info">
+            <div class="raider-small-name">Hor1zon17</div>
+            <div class="raider-small-stats">7 hits</div>
+          </div>
+          <div class="raider-small-value">3.8M</div>
+        </div>
+        <div class="raider-small-card">
+          <div class="raider-small-info">
+            <div class="raider-small-name">Taimanin_Alpha</div>
+            <div class="raider-small-stats">5 hits</div>
+          </div>
+          <div class="raider-small-value">2.8M</div>
+        </div>
+        <div class="raider-small-card">
+          <div class="raider-small-info">
+            <div class="raider-small-name">SaltyBalz</div>
+            <div class="raider-small-stats">4 hits</div>
+          </div>
+          <div class="raider-small-value">2.5M</div>
+        </div>
+        <div class="raider-small-card">
+          <div class="raider-small-info">
+            <div class="raider-small-name">A_SPACE_RAT</div>
+            <div class="raider-small-stats">2 hits</div>
+          </div>
+          <div class="raider-small-value">1.2M</div>
+        </div>
+        <div class="raider-small-card">
+          <div class="raider-small-info">
+            <div class="raider-small-name">Eeldar</div>
+            <div class="raider-small-stats">4 hits</div>
+          </div>
+          <div class="raider-small-value">1.0M</div>
+        </div>
+        <div class="raider-small-card">
+          <div class="raider-small-info">
+            <div class="raider-small-name">ChefHeisca</div>
+            <div class="raider-small-stats">3 hits</div>
+          </div>
+          <div class="raider-small-value">0.9M</div>
+        </div>
+        <div class="raider-small-card">
+          <div class="raider-small-info">
+            <div class="raider-small-name">Glanshon</div>
+            <div class="raider-small-stats">1 hits</div>
+          </div>
+          <div class="raider-small-value">0.7M</div>
+        </div>
+        <div class="raider-small-card">
+          <div class="raider-small-info">
+            <div class="raider-small-name">Wolf1993</div>
+            <div class="raider-small-stats">3 hits</div>
+          </div>
+          <div class="raider-small-value">0.6M</div>
+        </div>
+        <div class="raider-small-card">
+          <div class="raider-small-info">
+            <div class="raider-small-name">Mav</div>
+            <div class="raider-small-stats">3 hits</div>
+          </div>
+          <div class="raider-small-value">0.3M</div>
+        </div>
+        <div class="raider-small-card">
+          <div class="raider-small-info">
+            <div class="raider-small-name">Primalshadow506</div>
+            <div class="raider-small-stats">2 hits</div>
+          </div>
+          <div class="raider-small-value">0.2M</div>
+        </div>
+        <div class="raider-small-card">
+          <div class="raider-small-info">
+            <div class="raider-small-name">Inar038</div>
+            <div class="raider-small-stats">1 hits</div>
+          </div>
+          <div class="raider-small-value">0.2M</div>
+        </div>
+        <div class="raider-small-card">
+          <div class="raider-small-info">
+            <div class="raider-small-name">CitizenZulu</div>
+            <div class="raider-small-stats">1 hits</div>
+          </div>
+          <div class="raider-small-value">0.1M</div>
+        </div>
+      </div>
+    </div>
 
   <!-- ══ LOCATIONS + SHIPS ═════════════════════════════════ -->
   <div class="two-col">
@@ -501,55 +707,56 @@
     <!-- LOCATIONS -->
     <div class="section">
       <div class="section-title">Top Hunting Grounds</div>
+      <div class="hits-list">
+        <div class="location-row">
+          <img src="../sc-locations/Stanton/Moons/Cellin.jpg" class="location-img" alt="Cellin">
+          <div>
+            <div class="location-name">Terra Mills HydroFarm</div>
+            <div class="location-sub">Cellin · Moon of Crusader · Stanton</div>
+          </div>
+          <div>
+            <div class="location-pct">29.6%</div>
+            <div class="location-count">56 hits</div>
+          </div>
+        </div>
 
-      <div class="location-row">
-        <img src="../sc-locations/Stanton/Moons/Cellin.jpg" class="location-img" alt="Cellin">
-        <div>
-          <div class="location-name">Terra Mills HydroFarm</div>
-          <div class="location-sub">Cellin · Moon of Crusader · Stanton</div>
+        <div class="location-row">
+          <img src="../sc-locations/Pyro/Planets/Pyro IV.jpg" class="location-img" alt="Pyro IV">
+          <div>
+            <div class="location-name">Sacren's Plot</div>
+            <div class="location-sub">Pyro IV · Planet · Pyro</div>
+          </div>
+          <div>
+            <div class="location-pct">11.6%</div>
+            <div class="location-count">22 hits</div>
+          </div>
         </div>
-        <div>
-          <div class="location-pct">29.6%</div>
-          <div class="location-count">56 hits</div>
-        </div>
-      </div>
 
-      <div class="location-row">
-        <img src="../sc-locations/Pyro/Planets/Pyro IV.jpg" class="location-img" alt="Pyro IV">
-        <div>
-          <div class="location-name">Sacren's Plot</div>
-          <div class="location-sub">Pyro IV · Planet · Pyro</div>
+        <div class="location-row">
+          <img src="../sc-locations/Stanton/Planets/Crusader.jpg" class="location-img" alt="Crusader">
+          <div>
+            <div class="location-name">Crusader</div>
+            <div class="location-sub">Gas Giant · Stanton II · Stanton</div>
+          </div>
+          <div>
+            <div class="location-pct">9.0%</div>
+            <div class="location-count">17 hits</div>
+          </div>
         </div>
-        <div>
-          <div class="location-pct">11.6%</div>
-          <div class="location-count">22 hits</div>
-        </div>
-      </div>
 
-      <div class="location-row">
-        <img src="../sc-locations/Stanton/Planets/Crusader.jpg" class="location-img" alt="Crusader">
-        <div>
-          <div class="location-name">Crusader</div>
-          <div class="location-sub">Gas Giant · Stanton II · Stanton</div>
-        </div>
-        <div>
-          <div class="location-pct">9.0%</div>
-          <div class="location-count">17 hits</div>
-        </div>
-      </div>
-
-      <div class="location-row">
-        <div style="width:54px;height:54px;border-radius:50%;border:3px solid rgba(37,104,160,0.8);overflow:hidden;flex-shrink:0;">
-          <img src="../sc-locations/Stanton/Planets/Crusader.jpg" alt="CRU-L1"
-            style="width:100%;height:100%;object-fit:cover;filter:hue-rotate(190deg) saturate(0.35) brightness(0.65);">
-        </div>
-        <div>
-          <div class="location-name">CRU-L1 Ambitious Dream</div>
-          <div class="location-sub">L1 Station · Crusader Orbit · Stanton</div>
-        </div>
-        <div>
-          <div class="location-pct">7.4%</div>
-          <div class="location-count">14 hits</div>
+        <div class="location-row">
+          <div style="width:54px;height:54px;border-radius:50%;border:3px solid rgba(37,104,160,0.8);overflow:hidden;flex-shrink:0;">
+            <img src="../sc-locations/Stanton/Planets/Crusader.jpg" alt="CRU-L1"
+              style="width:100%;height:100%;object-fit:cover;filter:hue-rotate(190deg) saturate(0.35) brightness(0.65);">
+          </div>
+          <div>
+            <div class="location-name">CRU-L1 Ambitious Dream</div>
+            <div class="location-sub">L1 Station · Crusader Orbit · Stanton</div>
+          </div>
+          <div>
+            <div class="location-pct">7.4%</div>
+            <div class="location-count">14 hits</div>
+          </div>
         </div>
       </div>
     </div>

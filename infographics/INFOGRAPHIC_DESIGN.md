@@ -132,6 +132,16 @@ Introduced in 4.6 to show the full roster beyond the top 3.
 - Card: `.raider-small-card` with `border-left: 2px solid var(--red)`
 - Inner: Flex-spaced name/hits on left, value on right
 
+**Font & Color Standards for Raider Grid:**
+- Hit count (`.raider-small-stats`):
+  - Font size: 11px
+  - Color: var(--text)
+- aUEC value (`.raider-small-value`):
+  - Font size: 14px
+  - Color: var(--gold)
+
+> Always use these values for new infographics to ensure consistency and readability. Do not increase hit count font size above 11px, and do not change aUEC value color from gold.
+
 ### Biggest Score grid
 `grid-template-columns: auto 1fr auto` — skull icon | text content | ship thumbnail (220×130px).
 

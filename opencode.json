@@ -1,0 +1,23 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "provider": {
+    "openai": {
+      "options": {
+        "baseURL": "http://192.168.2.23:1234/v1",
+        "apiKey": "sk-local",
+        "headerTimeout": 60000,
+        "timeout": 300000,
+        "chunkTimeout": 60000
+      },
+      "models": {
+        "qwen3.6-35b-a3b-mtp": {
+          "description": "qwen",
+          "limit": {
+            "context": 48896,
+            "output": 8192
+          }
+        }
+      }
+    }
+  }
+}

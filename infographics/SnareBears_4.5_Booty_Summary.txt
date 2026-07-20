@@ -17,9 +17,9 @@
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
   TOP PLUNDERERS  (by total value)
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-  1.  Barecgesh       30 raids  |  65,069,902 aUEC
-  2.  Syzyf           27 raids  |  59,825,902 aUEC
-  3.  wardawg         22 raids  |  57,875,570 aUEC
+   1.  Barecgesh       30 raids  |   19,944,888 aUEC
+   2.  Syzyf           27 raids  |   18,669,455 aUEC
+   3.  wardawg         22 raids  |  17,954,615 aUEC
 
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━

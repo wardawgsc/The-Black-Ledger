@@ -49,6 +49,12 @@ PowerShell scripts run natively on Windows (`pwsh` or `powershell`). On Linux/ma
 - **Font loading:** Infographics use Google Fonts (Orbitron + Share Tech Mono). The Playwright render script waits for `networkidle` plus 1500ms extra to ensure fonts settle before screenshot.
 - **No test suite.** Verification is manual: run `check_all_patches.ps1` to cross-check split-share math against summary text files.
 
+## Hardware & Context Limits
+
+- **Batch size:** Cap physical batch reads at **128 / 64** (never exceed). Massive context reads that exceed this threshold will trigger Vulkan `ErrorDeviceLost` crashes.
+- **GPU offload:** During large file reads or multi-file analysis, reduce GPU offload by **2–3 layers** to prevent memory exhaustion and rendering failures.
+- Always use the `read` tool with `offset`/`limit` parameters instead of loading entire files at once when dealing with large datasets.
+
 ## Asset downloads
 
 ```powershell

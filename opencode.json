@@ -4,10 +4,7 @@
     "openai": {
       "options": {
         "baseURL": "http://192.168.2.23:1234/v1",
-        "apiKey": "sk-local",
-        "headerTimeout": 60000,
-        "timeout": 300000,
-        "chunkTimeout": 60000
+        "apiKey": "sk-local"
       },
       "models": {
         "qwen3.6-35b-a3b-mtp": {

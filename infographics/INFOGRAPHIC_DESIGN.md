@@ -18,7 +18,7 @@ infographics/
 ```
 
 Asset paths (relative from `infographics/`):
-- Ships: `../sc-ship-topdown-test/<Manufacturer>/<Ship>.png`
+- Ships: `../sc-ship-topdown-test/<Manufacturer>/<Ship Name>.png`
 - Planets: `../sc-locations/Stanton/Planets/<Planet>.jpg`
 - Moons: `../sc-locations/Stanton/Moons/<Moon>.jpg`
 - Logo: `../Assets/sb_logo_intro.png`
@@ -126,6 +126,16 @@ Set proportionally to the top earner = 100%. Calculate others as `(value / top_v
 ### Ship images
 PNGs with transparent backgrounds. No container background or border — ships float cleanly against the dark page. Uses `mix-blend-mode: screen` on the `<img>`.
 
+**Asset download:** Top-down ship PNGs are pulled from `hangar.link` / `fleetviewer.link` CDNs via `download-sc-ships-topdown.ps1`. The script auto-discovers manifests, constructs image URLs from hash values, and saves files to `<OutputDir>/<Manufacturer>/<Ship Name>.png`.
+
+**Naming conventions (base vs variant):**
+- Base models (variant slug empty): CDN path uses double-underscore — `{shipSlug}__{size}_{hash}.png`
+- Specific variants (distinct variant slug): CDN path uses single underscore — `{shipSlug}_{variantSlug}_{size}_{hash}.png`
+
+**PNG integrity validation:** Downloaded files are validated against PNG magic bytes (`89 50 4E 47 0D 0A 1A 0A` at bytes 0–7) and IHDR chunk presence (bytes 12–15 = `IHDR`). HTML wrapper responses and corrupt files are automatically discarded and re-attempted. Cached files are also re-validated on subsequent runs.
+
+**Size keys:** `top_l` (large, used in infographics), `top_s` (small), `top_xs` (xsmall).
+
 ### Raider Grid (Patch Totals)
 Introduced in 4.6 to show the full roster beyond the top 3.
 - Container: `.raider-grid` (3-column layout)
@@ -147,6 +157,15 @@ Introduced in 4.6 to show the full roster beyond the top 3.
 
 ---
 
+## Data Validation Constraints
+
+These two rules are **immutable** — future agents must never violate them:
+
+1. **Math Isolation:** "Overall Totals" (AT A GLANCE stat cards) must be derived strictly from raw JSON value fields and must NEVER sum or combine individual raider split shares. Split-share values belong only to the TOP PLUNDERERS section.
+2. **Roster De-duplication:** Anyone listed in the "TOP 3" plunderers grid must be automatically and completely stripped from the general "Active Raiders" roster grid. No name may appear in both sections.
+
+---
+
 ## Creating a New Patch Infographic
 
 1. Copy `SnareBears_4.2_Infographic.html` → `SnareBears_4.X_Infographic.html`
@@ -154,10 +173,10 @@ Introduced in 4.6 to show the full roster beyond the top 3.
 3. Update the 4 AT A GLANCE stat cards
 4. Update TOP PLUNDERERS — recalculate bar widths relative to new top earner
 5. Update LOCATIONS — swap images and data; use the wrapper-div trick for any filtered images
-6. Update SHIPS — swap ship PNG paths and manufacturer names
+6. Update SHIPS — swap ship SVG paths (use `<slug>_top_l.svg` format) and manufacturer names
 7. Update HOTTEST COMMODITIES — recalculate bar widths relative to new top commodity
 8. Update BIGGEST SCORE — new target/ship/location/crew/commodities; look up commodities from the raw JSON if not in the summary txt
-9. Update FUN FACTS — write 5 facts relevant to the new patch data
+9. Update FUN FACTS — write 5 facts relevant to the new patch data; **cross-patch continuity:** any trivia, milestones, or "ever" claims must account for historical patch data. If a new patch breaks an existing record, update earlier patch references accordingly. Never claim "first patch to achieve X" without verifying prior patches do not already contain that achievement.
 10. Update FOOTER — update source JSON filename
 
 ### Looking up Biggest Score commodities from JSON

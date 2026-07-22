@@ -143,6 +143,71 @@ Write 4–6 bullet points that highlight interesting patterns, notable moments, 
 - Patch-over-patch comparison if applicable
 - Unusual ship or commodity that stands out
 
+**Cross-patch continuity rule:** Any trivia, milestones, or aggregate fun facts generated for a new patch must account for historical patch data to maintain chronological and logical accuracy. When referencing "ever," "total ever," or "highest ever" claims, always verify against the full patch history — not just the most recent patches. If a new patch breaks an existing record, update any earlier patch references that are no longer accurate. Never fabricate a "first patch to achieve X" claim without confirming the prior patch data does not already contain that achievement.
+
+---
+
+## Ship Images: Asset Download & Naming
+
+Top-down ship PNGs are downloaded via `download-sc-ships-topdown.ps1`, which pulls assets from `hangar.link` and `fleetviewer.link` CDNs.
+
+### CDN URL Patterns
+
+The script discovers ship manifests from multiple candidate URLs, trying these in order:
+
+| Priority | Manifest URL |
+|---|---|
+| 1 | `https://hangar.link/ships.json` |
+| 2 | `https://fleetviewer.link/ships.json` |
+| 3 | `https://fleetviewer.link/data/ships.json` |
+| 4 | `https://hangar.link/data/ships.json` |
+| 5 | `https://cdn1.fleetviewer.link/ships.json` |
+
+Image URLs are constructed from hash values found in the manifest data using these patterns:
+
+| Pattern | Example |
+|---|---|
+| Direct URL in manifest | `https://cdn1.fleetviewer.link/...` |
+| Path-based (starts with `/`) | `https://cdn1.fleetviewer.link{path}` or `https://hangar.link{path}` |
+| Hash-based (base model, no variant) | `https://cdn1.fleetviewer.link/{shipSlug}__{size}_{hash}.png` |
+| Hash-based (specific variant) | `https://cdn1.fleetviewer.link/{shipSlug}_{variantSlug}_{size}_{hash}.png` |
+| Fallback asset paths | `https://cdn1.fleetviewer.link/assets/ships/{slug}_{size}.png` |
+| Fallback asset paths | `https://hangar.link/assets/ships/{slug}.png` |
+
+**Size keys:** `top_l` (large), `top_s` (small), `top_xs` (xsmall).
+
+### Naming Convention
+
+The script saves downloaded images using these rules:
+
+| Condition | Output filename format |
+|---|---|
+| Base ship (variant slug is empty or matches ship slug) | `{shipName}__{size}_{hash}.png` → saved as `{safeName}.png` |
+| Specific variant (distinct variant slug) | `{shipName}_{variantSlug}_{size}_{hash}.png` → saved as `{safeName}.png` |
+
+File directory structure: `<OutputDir>/<Manufacturer>/<Ship Name>.png`
+
+### PNG Integrity Validation
+
+The script validates downloaded files before accepting them, using `Test-PngIntegrity`:
+
+1. **Size check:** File must be ≥ 2500 bytes
+2. **HTML wrapper detection:** First 50 bytes must not start with `<` or contain `html` / `svg`
+3. **PNG magic bytes:** Must match `89 50 4E 47 0D 0A 1A 0A` at bytes 0–7
+4. **IHDR chunk:** Bytes 12–15 must spell `IHDR`
+
+Files that fail validation are discarded and the script tries the next candidate URL. Pre-existing files are also re-checked: if a cached file fails integrity validation, it is flagged as corrupt and re-downloaded.
+
+### Usage
+
+```powershell
+.\download-sc-ships-topdown.ps1
+.\download-sc-ships-topdown.ps1 -OutputDir "sc-ship-topdown-test" -Size "large"
+.\download-sc-ships-topdown.ps1 -ForceRedownload
+```
+
+Output summary shows: downloaded, repaired (re-downloaded corrupt files), skipped (valid cached), and failed counts.
+
 ---
 
 ## Formatting Rules

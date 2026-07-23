@@ -1,0 +1,1135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>SnareBears — Overall Organization Totals</title>
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg:        #07090f;
+      --bg2:       #0c1020;
+      --bg3:       #111828;
+      --bg4:       #181e2e;
+      --red:       #1c4e78;
+      --red2:      #2568a0;
+      --red-dim:   rgba(28,78,120,0.15);
+      --gold:      #b08a28;
+      --gold2:     #b08a28;
+      --yellow:    #b08a28;
+      --text:      #7a9ab8;
+      --bright:    #c8dce8;
+      --dim:       #3a5068;
+      --border:    #141e2c;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Share Tech Mono', 'Courier New', monospace;
+      width: 1200px;
+      margin: 0 auto;
+      padding: 36px 40px;
+      position: relative;
+    }
+
+    /* Subtle noise texture */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: repeating-linear-gradient(
+        0deg,
+        transparent 0px, transparent 3px,
+        rgba(0,0,0,0.08) 3px, rgba(0,0,0,0.08) 4px
+      );
+      pointer-events: none;
+      z-index: 9999;
+    }
+
+    /* Diagonal stripe texture helper */
+    .stripes {
+      background-image: repeating-linear-gradient(
+        45deg,
+        transparent,
+        transparent 4px,
+        rgba(28,78,120,0.04) 4px,
+        rgba(28,78,120,0.04) 8px
+      );
+    }
+
+    /* ─── HEADER ───────────────────────────────────────── */
+    .header {
+      display: flex;
+      align-items: center;
+      gap: 30px;
+      padding-bottom: 28px;
+      margin-bottom: 28px;
+      border-bottom: 1px solid var(--border);
+      position: relative;
+    }
+    .header::after {
+      content: '';
+      position: absolute;
+      bottom: -1px; left: 0;
+      width: 60%;
+      height: 1px;
+      background: linear-gradient(to right, var(--gold), transparent);
+    }
+
+    .logo {
+      width: 110px;
+      height: auto;
+      filter: drop-shadow(0 0 10px rgba(28,78,120,0.5));
+      flex-shrink: 0;
+    }
+
+    .header-center { flex: 1; }
+    .header-eyebrow {
+      font-size: 16px;
+      letter-spacing: 5px;
+      color: var(--text);
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    .header-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 38px;
+      font-weight: 900;
+      color: var(--bright);
+      letter-spacing: 3px;
+      text-shadow: none;
+      line-height: 1;
+    }
+    .header-sub {
+      font-size: 13px;
+      letter-spacing: 3px;
+      color: var(--text);
+      margin-top: 10px;
+    }
+    .header-sub span { color: var(--yellow); }
+
+    .header-skull {
+      font-size: 100px;
+      line-height: 1;
+      opacity: 0.07;
+      position: absolute;
+      right: 0; top: -10px;
+      user-select: none;
+    }
+
+    /* ─── STATS ROW ────────────────────────────────────── */
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      margin-bottom: 28px;
+    }
+    .stat-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-top: 2px solid var(--red);
+      padding: 18px 16px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .stat-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(150deg, rgba(28,78,120,0.10) 0%, transparent 55%);
+    }
+    .stat-value {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 30px;
+      font-weight: 700;
+      color: var(--bright);
+      text-shadow: none;
+      line-height: 1.1;
+    }
+    .stat-label {
+      font-size: 12px;
+      letter-spacing: 3px;
+      color: var(--text);
+      text-transform: uppercase;
+      margin-top: 6px;
+    }
+
+    /* ─── SECTION HEADERS ──────────────────────────────── */
+    .section { margin-bottom: 28px; }
+    .section-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 13px;
+      letter-spacing: 4px;
+      color: var(--bright);
+      text-transform: uppercase;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .section-title::before { content: '▸'; color: var(--red); font-size: 14px; }
+    .section-subtitle {
+      font-size: 13px;
+      letter-spacing: 2px;
+      color: var(--text);
+      margin-bottom: 12px;
+      text-transform: uppercase;
+    }
+
+    /* ─── PLUNDERERS ───────────────────────────────────── */
+    .plunderer-row {
+      display: grid;
+      grid-template-columns: 32px 1fr 140px minmax(0,1fr) 240px;
+      align-items: center;
+      gap: 16px;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .plunderer-rank {
+      font-family: 'Orbitron', sans-serif;
+      color: var(--yellow);
+      font-size: 16px;
+      font-weight: 700;
+    }
+    .plunderer-name { color: var(--bright); font-size: 15px; }
+    .plunderer-raids { color: var(--text); font-size: 13px; text-align: right; }
+    .bar-wrap {
+      background: var(--bg3);
+      height: 8px;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    .bar-fill {
+      height: 100%;
+      border-radius: 4px;
+      background: linear-gradient(to right, var(--red), var(--red2));
+      box-shadow: none;
+    }
+    .plunderer-value {
+      color: var(--yellow);
+      font-size: 17px;
+      text-align: right;
+      text-shadow: none;
+    }
+
+    /* ─── RAIDER GRID ──────────────────────────────────── */
+    .raider-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-top: 16px;
+    }
+    .raider-small-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      padding: 10px 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: relative;
+    }
+    .raider-small-card::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 2px;
+      background: var(--red);
+    }
+    .raider-small-info {
+      display: flex;
+      flex-direction: column;
+    }
+    .raider-small-name {
+      color: var(--bright);
+      font-size: 14px;
+      font-weight: bold;
+    }
+    .raider-small-stats {
+      color: var(--text);
+      font-size: 12px;
+      letter-spacing: 1px;
+      margin-top: 2px;
+      text-transform: uppercase;
+    }
+    .raider-small-value {
+      font-family: 'Orbitron', sans-serif;
+      color: var(--gold);
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    /* ─── TWO COLUMN ───────────────────────────────────── */
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 28px;
+      margin-bottom: 28px;
+    }
+
+    .section-flex-col {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+
+    .hits-list {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 355px;
+    }
+
+    /* ─── LOCATIONS ────────────────────────────────────── */
+    .location-row {
+      display: grid;
+      grid-template-columns: 58px 1fr auto;
+      align-items: center;
+      gap: 14px;
+      padding: 11px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .location-img {
+      width: 54px;
+      height: 54px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid rgba(37,104,160,0.8);
+      box-shadow: none;
+    }
+    .location-name { color: var(--bright); font-size: 15px; line-height: 1.4; }
+    .location-sub { color: var(--text); font-size: 13px; margin-top: 3px; }
+    .location-pct {
+      font-family: 'Orbitron', sans-serif;
+      color: var(--gold);
+      font-size: 18px;
+      font-weight: 700;
+      text-align: right;
+    }
+    .location-count { color: var(--text); font-size: 13px; text-align: right; margin-top: 2px; }
+
+    /* ─── SHIPS ────────────────────────────────────────── */
+    .ship-row {
+      display: grid;
+      grid-template-columns: 90px 1fr auto;
+      align-items: center;
+      gap: 14px;
+      padding: 9px 0;
+      border-bottom: 1px solid var(--border);
+      height: 71px;
+    }
+    .ship-thumb {
+      width: 90px;
+      height: 52px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+    .ship-thumb img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+      filter: drop-shadow(0 0 4px rgba(176,138,40,0.2));
+      mix-blend-mode: screen;
+    }
+    .ship-name { color: var(--bright); font-size: 15px; }
+    .ship-count { color: var(--text); font-size: 13px; margin-top: 3px; }
+    .ship-pct {
+      font-family: 'Orbitron', sans-serif;
+      color: var(--gold);
+      font-size: 18px;
+      font-weight: 700;
+      text-align: right;
+      text-shadow: none;
+    }
+
+    /* ─── COMMODITIES ──────────────────────────────────── */
+    .commodity-row {
+      display: grid;
+      grid-template-columns: 230px minmax(0,1fr) 72px;
+      align-items: center;
+      gap: 16px;
+      padding: 9px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .commodity-name { color: var(--bright); font-size: 15px; }
+    .commodity-bar-wrap {
+      background: var(--bg3);
+      height: 10px;
+      border-radius: 5px;
+      overflow: hidden;
+    }
+    .commodity-bar {
+      height: 100%;
+      border-radius: 5px;
+      background: linear-gradient(to right, var(--red), var(--red2));
+      box-shadow: none;
+    }
+    .commodity-pct {
+      font-family: 'Orbitron', sans-serif;
+      color: var(--gold);
+      font-size: 18px;
+      font-weight: 700;
+      text-align: right;
+    }
+
+    /* ─── BIGGEST SCORE ────────────────────────────────── */
+    .biggest-score {
+      background: var(--bg2);
+      border: 1px solid var(--yellow);
+      box-shadow: none;
+      padding: 26px 30px;
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      gap: 28px;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .biggest-score::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(
+        45deg,
+        transparent, transparent 6px,
+        rgba(28,78,120,0.03) 6px, rgba(28,78,120,0.03) 12px
+      );
+    }
+    .biggest-score::after {
+      content: '';
+      position: absolute;
+      top: 8px; right: 8px;
+      width: 20px; height: 20px;
+      border-top: 2px solid var(--yellow);
+      border-right: 2px solid var(--yellow);
+    }
+    .score-skull { font-size: 54px; opacity: 0.5; }
+    .score-label {
+      font-size: 13px; letter-spacing: 4px;
+      color: var(--text); text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+    .score-amount {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 36px; font-weight: 900;
+      color: var(--yellow);
+      text-shadow: none;
+    }
+    .score-amount-unit {
+      font-size: 18px;
+      font-weight: 400;
+      letter-spacing: 2px;
+      opacity: 0.75;
+    }
+    .score-details {
+      display: flex; gap: 36px; margin-top: 14px; flex-wrap: wrap;
+    }
+    .score-detail-label {
+      font-size: 13px; letter-spacing: 2px;
+      color: var(--text); text-transform: uppercase;
+    }
+    .score-detail-value { color: var(--bright); font-size: 16px; margin-top: 3px; }
+
+    .score-ship-thumb {
+      width: 220px; height: 130px;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .score-ship-thumb img {
+      max-width: 100%; max-height: 100%;
+      object-fit: contain;
+      filter: drop-shadow(0 0 6px rgba(176,138,40,0.2));
+      mix-blend-mode: screen;
+    }
+
+    /* ─── FUN FACTS ────────────────────────────────────── */
+    .fun-facts {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--red);
+      padding: 22px 28px;
+    }
+    .fun-fact-item {
+      display: flex;
+      gap: 16px;
+      padding: 11px 0;
+      border-bottom: 1px solid var(--border);
+      align-items: flex-start;
+    }
+    .fun-fact-item:last-child { border-bottom: none; }
+    .fun-fact-bullet {
+      color: var(--red2);
+      font-size: 18px;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .fun-fact-text {
+      color: var(--text);
+      font-size: 16px;
+      line-height: 1.65;
+    }
+    .fun-fact-text strong { color: var(--bright); }
+
+    /* ─── FOOTER ───────────────────────────────────────── */
+    .footer {
+      margin-top: 28px;
+      padding-top: 16px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: var(--text);
+      font-size: 11px;
+      letter-spacing: 2px;
+    }
+    .footer span { text-transform: uppercase; }
+  </style>
+</head>
+<body>
+
+  <!-- ══ HEADER ════════════════════════════════════════════ -->
+  <div class="header stripes">
+    <img src="../Assets/sb_logo_intro.png" alt="SnareBears" class="logo">
+    <div class="header-center">
+      <div class="header-eyebrow">Black Ledger Report</div>
+      <div class="header-title">ORGANIZATION TOTALS</div>
+      <div class="header-sub">
+        <span>2025-06-21 to 2026-07-15</span>
+        &nbsp;·&nbsp; ~56 WEEKS &nbsp;·&nbsp; STANTON + PYRO SYSTEM + NYX SYSTEM
+        &nbsp;·&nbsp; 7 PATCHES
+      </div>
+    </div>
+    <div class="header-skull">☠</div>
+  </div>
+
+  <!-- ══ AT A GLANCE ═══════════════════════════════════════ -->
+  <div class="stats-row">
+    <div class="stat-card">
+      <div class="stat-value">492</div>
+      <div class="stat-label">Total Hits</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value">793.6M</div>
+      <div class="stat-label">aUEC Plundered</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value">45</div>
+      <div class="stat-label">Total Raiders</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value">~1,613,000</div>
+      <div class="stat-label">aUEC / Hit</div>
+    </div>
+  </div>
+
+  <!-- ══ TOP PLUNDERERS ════════════════════════════════════ -->
+  <div class="section">
+    <div class="section-title">Field Performance — Top Raiders</div>
+
+
+    <div class="plunderer-row">
+      <div class="plunderer-rank">#1</div>
+      <div class="plunderer-name">wardawg</div>
+      <div class="plunderer-raids">246 hits · 7 patches</div>
+      <div class="bar-wrap"><div class="bar-fill" style="width:100%"></div></div>
+      <div class="plunderer-value">141,896,895 aUEC</div>
+    </div>
+    <div class="plunderer-row">
+      <div class="plunderer-rank">#2</div>
+      <div class="plunderer-name">Barecgesh</div>
+      <div class="plunderer-raids">134 hits · 6 patches</div>
+      <div class="bar-wrap"><div class="bar-fill" style="width:75%"></div></div>
+      <div class="plunderer-value">106,708,717 aUEC</div>
+    </div>
+    <div class="plunderer-row">
+      <div class="plunderer-rank">#3</div>
+      <div class="plunderer-name">Ma6num</div>
+      <div class="plunderer-raids">208 hits · 7 patches</div>
+      <div class="bar-wrap"><div class="bar-fill" style="width:64%"></div></div>
+      <div class="plunderer-value">90,997,473 aUEC</div>
+    </div>
+    <div class="plunderer-row">
+      <div class="plunderer-rank">#4</div>
+      <div class="plunderer-name">DA-1220-VE</div>
+      <div class="plunderer-raids">108 hits · 6 patches</div>
+      <div class="bar-wrap"><div class="bar-fill" style="width:64%"></div></div>
+      <div class="plunderer-value">90,863,449 aUEC</div>
+    </div>
+    <div class="plunderer-row">
+      <div class="plunderer-rank">#5</div>
+      <div class="plunderer-name">Syzyf</div>
+      <div class="plunderer-raids">98 hits · 5 patches</div>
+      <div class="bar-wrap"><div class="bar-fill" style="width:56%"></div></div>
+      <div class="plunderer-value">79,334,564 aUEC</div>
+    </div>
+    <div class="plunderer-row">
+      <div class="plunderer-rank">#6</div>
+      <div class="plunderer-name">Chief_Scuff</div>
+      <div class="plunderer-raids">134 hits · 7 patches</div>
+      <div class="bar-wrap"><div class="bar-fill" style="width:35%"></div></div>
+      <div class="plunderer-value">50,007,559 aUEC</div>
+    </div>
+    <div class="plunderer-row">
+      <div class="plunderer-rank">#7</div>
+      <div class="plunderer-name">Taimanin_Alpha</div>
+      <div class="plunderer-raids">46 hits · 5 patches</div>
+      <div class="bar-wrap"><div class="bar-fill" style="width:22%"></div></div>
+      <div class="plunderer-value">30,849,697 aUEC</div>
+    </div>
+    <div class="plunderer-row">
+      <div class="plunderer-rank">#8</div>
+      <div class="plunderer-name">Mirror_Thought</div>
+      <div class="plunderer-raids">67 hits · 5 patches</div>
+      <div class="bar-wrap"><div class="bar-fill" style="width:22%"></div></div>
+      <div class="plunderer-value">30,608,233 aUEC</div>
+    </div>
+    <div class="plunderer-row">
+      <div class="plunderer-rank">#9</div>
+      <div class="plunderer-name">A_SPACE_RAT</div>
+      <div class="plunderer-raids">29 hits · 5 patches</div>
+      <div class="bar-wrap"><div class="bar-fill" style="width:13%"></div></div>
+      <div class="plunderer-value">18,465,248 aUEC</div>
+    </div>
+    <div class="plunderer-row">
+      <div class="plunderer-rank">#10</div>
+      <div class="plunderer-name">TACtheMENACE</div>
+      <div class="plunderer-raids">58 hits · 7 patches</div>
+      <div class="bar-wrap"><div class="bar-fill" style="width:13%"></div></div>
+      <div class="plunderer-value">18,407,935 aUEC</div>
+    </div>
+
+    <!-- ── Full Raider Roster (excludes Top 10) ── -->
+    <div class="section-subtitle" style="margin-top: 24px; border-bottom: 1px solid var(--border); padding-bottom: 8px;">Active Raiders — Organization Totals</div>
+    <div class="raider-grid">
+
+      <div class="raider-small-card">
+        <div class="raider-small-info">
+          <div class="raider-small-name">Hecko</div>
+          <div class="raider-small-stats">55 hits across 5 patches</div>
+        </div>
+        <div class="raider-small-value">17.1M</div>
+      </div>
+      <div class="raider-small-card">
+        <div class="raider-small-info">
+          <div class="raider-small-name">Wolf1993</div>
+          <div class="raider-small-stats">24 hits across 5 patches</div>
+        </div>
+        <div class="raider-small-value">13.8M</div>
+      </div>
+      <div class="raider-small-card">
+        <div class="raider-small-info">
+          <div class="raider-small-name">SadAnt</div>
+          <div class="raider-small-stats">19 hits across 1 patches</div>
+        </div>
+        <div class="raider-small-value">13.7M</div>
+      </div>
+      <div class="raider-small-card">
+        <div class="raider-small-info">
+          <div class="raider-small-name">Andy</div>
+          <div class="raider-small-stats">13 hits across 1 patches</div>
+        </div>
+        <div class="raider-small-value">9.4M</div>
+      </div>
+      <div class="raider-small-card">
+        <div class="raider-small-info">
+          <div class="raider-small-name">Inmate1776</div>
+          <div class="raider-small-stats">18 hits across 1 patches</div>
+        </div>
+        <div class="raider-small-value">9.0M</div>
+      </div>
+      <div class="raider-small-card">
+        <div class="raider-small-info">
+          <div class="raider-small-name">Eeldar</div>
+          <div class="raider-small-stats">16 hits across 3 patches</div>
+        </div>
+        <div class="raider-small-value">7.7M</div>
+      </div>
+      <div class="raider-small-card">
+        <div class="raider-small-info">
+          <div class="raider-small-name">EtherealDPS</div>
+          <div class="raider-small-stats">19 hits across 3 patches</div>
+        </div>
+        <div class="raider-small-value">7.1M</div>
+      </div>
+      <div class="raider-small-card">
+        <div class="raider-small-info">
+          <div class="raider-small-name">Hor1zon17</div>
+          <div class="raider-small-stats">8 hits across 2 patches</div>
+        </div>
+        <div class="raider-small-value">5.3M</div>
+      </div>
+      <div class="raider-small-card">
+        <div class="raider-small-info">
+          <div class="raider-small-name">MaydayMaydie</div>
+          <div class="raider-small-stats">16 hits across 4 patches</div>
+        </div>
+        <div class="raider-small-value">5.1M</div>
+      </div>
+      <div class="raider-small-card">
+        <div class="raider-small-info">
+          <div class="raider-small-name">Deadmandriftin</div>
+          <div class="raider-small-stats">7 hits across 1 patches</div>
+        </div>
+        <div class="raider-small-value">5.0M</div>
+      </div>
+      <div class="raider-small-card">
+        <div class="raider-small-info">
+          <div class="raider-small-name">Amiro77</div>
+          <div class="raider-small-stats">4 hits across 2 patches</div>
+        </div>
+        <div class="raider-small-value">4.8M</div>
+      </div>
+      <div class="raider-small-card">
+        <div class="raider-small-info">
+          <div class="raider-small-name">Glanshon</div>
+          <div class="raider-small-stats">16 hits across 3 patches</div>
+        </div>
+        <div class="raider-small-value">4.0M</div>
+      </div>
+      <div class="raider-small-card">
+        <div class="raider-small-info">
+          <div class="raider-small-name">Baniatoren</div>
+          <div class="raider-small-stats">16 hits across 1 patches</div>
+        </div>
+        <div class="raider-small-value">3.9M</div>
+      </div>
+      <div class="raider-small-card">
+        <div class="raider-small-info">
+          <div class="raider-small-name">DaddyYogurt</div>
+          <div class="raider-small-stats">10 hits across 1 patches</div>
+        </div>
+        <div class="raider-small-value">3.9M</div>
+      </div>
+      <div class="raider-small-card">
+        <div class="raider-small-info">
+          <div class="raider-small-name">SC-2505-IE</div>
+          <div class="raider-small-stats">3 hits across 2 patches</div>
+        </div>
+        <div class="raider-small-value">3.9M</div>
+      </div>
+      <div class="raider-small-card">
+        <div class="raider-small-info">
+          <div class="raider-small-name">ChefHeisca</div>
+          <div class="raider-small-stats">7 hits across 4 patches</div>
+        </div>
+        <div class="raider-small-value">3.2M</div>
+      </div>
+      <div class="raider-small-card">
+        <div class="raider-small-info">
+          <div class="raider-small-name">Wiki</div>
+          <div class="raider-small-stats">4 hits across 1 patches</div>
+        </div>
+        <div class="raider-small-value">3.0M</div>
+      </div>
+      <div class="raider-small-card">
+        <div class="raider-small-info">
+          <div class="raider-small-name">SaltyBalz</div>
+          <div class="raider-small-stats">4 hits across 1 patches</div>
+        </div>
+        <div class="raider-small-value">2.5M</div>
+      </div>
+      <div class="raider-small-card">
+        <div class="raider-small-info">
+          <div class="raider-small-name">Jackaboochie</div>
+          <div class="raider-small-stats">6 hits across 2 patches</div>
+        </div>
+        <div class="raider-small-value">2.3M</div>
+      </div>
+      <div class="raider-small-card">
+        <div class="raider-small-info">
+          <div class="raider-small-name">Sc00bs1</div>
+          <div class="raider-small-stats">5 hits across 1 patches</div>
+        </div>
+        <div class="raider-small-value">2.1M</div>
+      </div>
+      <div class="raider-small-card">
+        <div class="raider-small-info">
+          <div class="raider-small-name">Mav</div>
+          <div class="raider-small-stats">5 hits across 3 patches</div>
+        </div>
+        <div class="raider-small-value">1.5M</div>
+      </div>
+      <div class="raider-small-card">
+        <div class="raider-small-info">
+          <div class="raider-small-name">Pooch22</div>
+          <div class="raider-small-stats">6 hits across 1 patches</div>
+        </div>
+        <div class="raider-small-value">1.1M</div>
+      </div>
+      <div class="raider-small-card">
+        <div class="raider-small-info">
+          <div class="raider-small-name">Uncletouchy_u</div>
+          <div class="raider-small-stats">4 hits across 1 patches</div>
+        </div>
+        <div class="raider-small-value">1.0M</div>
+      </div>
+      <div class="raider-small-card">
+        <div class="raider-small-info">
+          <div class="raider-small-name">gamingdraumr</div>
+          <div class="raider-small-stats">1 hits across 1 patches</div>
+        </div>
+        <div class="raider-small-value">0.8M</div>
+      </div>
+      <div class="raider-small-card">
+        <div class="raider-small-info">
+          <div class="raider-small-name">Inar038</div>
+          <div class="raider-small-stats">3 hits across 2 patches</div>
+        </div>
+        <div class="raider-small-value">0.7M</div>
+      </div>
+      <div class="raider-small-card">
+        <div class="raider-small-info">
+          <div class="raider-small-name">Primalshadow506</div>
+          <div class="raider-small-stats">5 hits across 2 patches</div>
+        </div>
+        <div class="raider-small-value">0.5M</div>
+      </div>
+      <div class="raider-small-card">
+        <div class="raider-small-info">
+          <div class="raider-small-name">imdivad</div>
+          <div class="raider-small-stats">3 hits across 2 patches</div>
+        </div>
+        <div class="raider-small-value">0.5M</div>
+      </div>
+      <div class="raider-small-card">
+        <div class="raider-small-info">
+          <div class="raider-small-name">[388] DG</div>
+          <div class="raider-small-stats">1 hits across 1 patches</div>
+        </div>
+        <div class="raider-small-value">0.5M</div>
+      </div>
+      <div class="raider-small-card">
+        <div class="raider-small-info">
+          <div class="raider-small-name">AllJuiceNoSeed</div>
+          <div class="raider-small-stats">2 hits across 1 patches</div>
+        </div>
+        <div class="raider-small-value">0.4M</div>
+      </div>
+      <div class="raider-small-card">
+        <div class="raider-small-info">
+          <div class="raider-small-name">BSpars</div>
+          <div class="raider-small-stats">2 hits across 1 patches</div>
+        </div>
+        <div class="raider-small-value">0.3M</div>
+      </div>
+      <div class="raider-small-card">
+        <div class="raider-small-info">
+          <div class="raider-small-name">CitizenZulu</div>
+          <div class="raider-small-stats">2 hits across 2 patches</div>
+        </div>
+        <div class="raider-small-value">0.3M</div>
+      </div>
+      <div class="raider-small-card">
+        <div class="raider-small-info">
+          <div class="raider-small-name">[388] dead</div>
+          <div class="raider-small-stats">1 hits across 1 patches</div>
+        </div>
+        <div class="raider-small-value">0.3M</div>
+      </div>
+      <div class="raider-small-card">
+        <div class="raider-small-info">
+          <div class="raider-small-name">VADICANT</div>
+          <div class="raider-small-stats">1 hits across 1 patches</div>
+        </div>
+        <div class="raider-small-value">0.3M</div>
+      </div>
+      <div class="raider-small-card">
+        <div class="raider-small-info">
+          <div class="raider-small-name">fpvito</div>
+          <div class="raider-small-stats">2 hits across 2 patches</div>
+        </div>
+        <div class="raider-small-value">0.1M</div>
+      </div>
+      <div class="raider-small-card">
+        <div class="raider-small-info">
+          <div class="raider-small-name">Dev_Dwizzle</div>
+          <div class="raider-small-stats">1 hits across 1 patches</div>
+        </div>
+        <div class="raider-small-value">0.1M</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ LOCATIONS + SHIPS ═════════════════════════════════ -->
+  <div class="two-col">
+
+    <!-- LOCATIONS -->
+    <div class="section section-flex-col">
+      <div class="section-title">Top Hunting Grounds</div>
+
+      <div class="hits-list">
+
+        <div class="location-row">
+          <img src="../sc-locations/Stanton/Moons/Cellin.jpg" class="location-img" alt="Terra Mills HydroFarm">
+          <div>
+            <div class="location-name">Terra Mills HydroFarm</div>
+            <div class="location-sub">Farm · Cellin (Stanton VIII) · Stanton</div>
+          </div>
+          <div>
+            <div class="location-pct">18.3%</div>
+            <div class="location-count">90 hits</div>
+          </div>
+        </div>
+        <div class="location-row">
+          <img src="../sc-locations/Stanton/Planets/Crusader.jpg" class="location-img" alt="Crusader">
+          <div>
+            <div class="location-name">Crusader</div>
+            <div class="location-sub">Planet · Crusader (Stanton V) · Stanton</div>
+          </div>
+          <div>
+            <div class="location-pct">9.1%</div>
+            <div class="location-count">45 hits</div>
+          </div>
+        </div>
+        <div class="location-row">
+          <img src="../sc-locations/Pyro/Planets/Pyro V.jpg" class="location-img" alt="Rustville">
+          <div>
+            <div class="location-name">Rustville</div>
+            <div class="location-sub">Outpost · Pyro V · Pyro</div>
+          </div>
+          <div>
+            <div class="location-pct">9.1%</div>
+            <div class="location-count">45 hits</div>
+          </div>
+        </div>
+        <div class="location-row">
+          <img src="../sc-locations/Pyro/Planets/Pyro V.jpg" class="location-img" alt="Sacren's Plot">
+          <div>
+            <div class="location-name">Sacren's Plot</div>
+            <div class="location-sub">Outpost · Pyro V · Pyro</div>
+          </div>
+          <div>
+            <div class="location-pct">7.3%</div>
+            <div class="location-count">36 hits</div>
+          </div>
+        </div>
+        <div class="location-row">
+          <img src="../sc-locations/Stanton/Planets/Crusader.jpg" class="location-img" alt="CRU-L1 Ambitious Dream Station">
+          <div>
+            <div class="location-name">CRU-L1 Ambitious Dream Station</div>
+            <div class="location-sub">Lagrange Point · Crusader Lagrange Point 1 · Stanton</div>
+          </div>
+          <div>
+            <div class="location-pct">6.5%</div>
+            <div class="location-count">32 hits</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SHIPS -->
+    <div class="section">
+      <div class="section-title">Favourite Targets — Ship Types</div>
+      <div class="hits-list">
+
+      <div class="ship-row">
+        <div class="ship-thumb">
+          <img src="../sc-ship-topdown-test/Drake%20Interplanetary/Vulture.png" alt="Vulture">
+        </div>
+        <div>
+          <div class="ship-name">Vulture</div>
+          <div class="ship-count">44 hits · Drake Interplanetary</div>
+        </div>
+        <div class="ship-pct">8.9%</div>
+      </div>
+      <div class="ship-row">
+        <div class="ship-thumb">
+          <img src="../sc-ship-topdown-test/ARGO%20Astronautics/Raft.png" alt="RAFT">
+        </div>
+        <div>
+          <div class="ship-name">RAFT</div>
+          <div class="ship-count">44 hits · Unknown</div>
+        </div>
+        <div class="ship-pct">8.9%</div>
+      </div>
+      <div class="ship-row">
+        <div class="ship-thumb">
+          <img src="../sc-ship-topdown-test/Crusader%20Industries/C2%20Hercules.png" alt="C2 Hercules Starlifter">
+        </div>
+        <div>
+          <div class="ship-name">C2 Hercules Starlifter</div>
+          <div class="ship-count">35 hits · Roberts Space Industries</div>
+        </div>
+        <div class="ship-pct">7.1%</div>
+      </div>
+      <div class="ship-row">
+        <div class="ship-thumb">
+          <img src="../sc-ship-topdown-test/Aegis%20Dynamics/Reclaimer.png" alt="Reclaimer">
+        </div>
+        <div>
+          <div class="ship-name">Reclaimer</div>
+          <div class="ship-count">34 hits · Unknown</div>
+        </div>
+        <div class="ship-pct">6.9%</div>
+      </div>
+      <div class="ship-row">
+        <div class="ship-thumb">
+          <img src="../sc-ship-topdown-test/Roberts%20Space%20Industries/Constellation%20Taurus.png" alt="Constellation Taurus">
+        </div>
+        <div>
+          <div class="ship-name">Constellation Taurus</div>
+          <div class="ship-count">29 hits · Unknown</div>
+        </div>
+        <div class="ship-pct">5.9%</div>
+      </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ══ HOTTEST COMMODITIES ═══════════════════════════════ -->
+  <div class="section">
+    <div class="section-title">Hottest Commodities</div>
+    <div class="section-subtitle">Ranked by total aUEC yield across all hits — 778,053,333 total value</div>
+
+
+    <div class="commodity-row">
+      <div class="commodity-name">Construction Materials</div>
+      <div class="commodity-bar-wrap"><div class="commodity-bar" style="width:100%"></div></div>
+      <div class="commodity-pct">13.8%</div>
+    </div>
+    <div class="commodity-row">
+      <div class="commodity-name">Bexalite</div>
+      <div class="commodity-bar-wrap"><div class="commodity-bar" style="width:79%"></div></div>
+      <div class="commodity-pct">10.9%</div>
+    </div>
+    <div class="commodity-row">
+      <div class="commodity-name">Partillium</div>
+      <div class="commodity-bar-wrap"><div class="commodity-bar" style="width:73%"></div></div>
+      <div class="commodity-pct">10.1%</div>
+    </div>
+    <div class="commodity-row">
+      <div class="commodity-name">Neon</div>
+      <div class="commodity-bar-wrap"><div class="commodity-bar" style="width:70%"></div></div>
+      <div class="commodity-pct">9.8%</div>
+    </div>
+    <div class="commodity-row">
+      <div class="commodity-name">Recycled Material Composite</div>
+      <div class="commodity-bar-wrap"><div class="commodity-bar" style="width:55%"></div></div>
+      <div class="commodity-pct">7.6%</div>
+    </div>
+  </div>
+
+  <!-- ══ BIGGEST SCORE ══════════════════════════════════════ -->
+  <div class="section">
+    <div class="section-title">Biggest Score</div>
+    <div class="biggest-score">
+      <div class="score-skull">☠</div>
+      <div>
+        <div class="score-label">Top Haul — All Time</div>
+        <div class="score-amount">17,683,000 <span class="score-amount-unit">aUEC</span></div>
+        <div class="score-details">
+          <div class="score-detail">
+            <div class="score-detail-label">Victim</div>
+            <div class="score-detail-value">JulianINF, Frisches-Toast, WeissIchNicht</div>
+          </div>
+          <div class="score-detail">
+            <div class="score-detail-label">Location</div>
+            <div class="score-detail-value">Rustville</div>
+          </div>
+          <div class="score-detail">
+            <div class="score-detail-label">Commodities</div>
+            <div class="score-detail-value">Atlasium, Dymantium, Neon</div>
+          </div>
+          <div class="score-detail">
+            <div class="score-detail-label">Crew</div>
+            <div class="score-detail-value">DA-1220-VE, wardawg, SC-2505-IE, A_SPACE_RAT, Eeldar</div>
+          </div>
+        </div>
+      </div>
+      <div class="score-ship-thumb">
+        <img src="../sc-ship-topdown-test/Crusader%20Industries/C2%20Hercules.png" alt="C2 Hercules Starlifter">
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ FUN FACTS ═════════════════════════════════════════ -->
+  <div class="section">
+    <div class="section-title">Fun Facts</div>
+    <div class="fun-facts">
+
+
+      <div class="fun-fact-item">
+        <div class="fun-fact-bullet">▸</div>
+        <div class="fun-fact-text">
+          <strong>A Full Patch Legacy</strong> — Across <strong>7 patches</strong> (492 total hits), the SnareBears have accumulated <strong>793,563,918 aUEC</strong> in plunder — spanning from 2025-06-21 to 2026-07-15, a run of approximately <strong>56 weeks</strong> of operations.
+        </div>
+      </div>
+      <div class="fun-fact-item">
+        <div class="fun-fact-bullet">▸</div>
+        <div class="fun-fact-text">
+          <strong>wardawg Runs the Board</strong> — <strong>wardawg</strong> leads all raiders with <strong>141,896,895 aUEC</strong> and 246 hits across 7 patches — contributing <strong>17.9%</strong> of all overall plunder. A near-unanimous #1.
+        </div>
+      </div>
+      <div class="fun-fact-item">
+        <div class="fun-fact-bullet">▸</div>
+        <div class="fun-fact-text">
+          <strong>Top 3 Domination</strong> — The top three plunderers (wardawg, Barecgesh, Ma6num) combine for <strong>588 participations</strong> across <strong>492 total hits</strong> (counting each individual raider's presence per raid) and control <strong>29.6%</strong> of all plunder value — an elite tier no one else has matched.
+        </div>
+      </div>
+      <div class="fun-fact-item">
+        <div class="fun-fact-bullet">▸</div>
+        <div class="fun-fact-text">
+          <strong>Perfect Attendance</strong> — <strong>wardawg, Ma6num, Chief_Scuff, TACtheMENACE</strong> 4 raiders participated in all 7 patches — true pillars of the organization.
+        </div>
+      </div>
+      <div class="fun-fact-item">
+        <div class="fun-fact-bullet">▸</div>
+        <div class="fun-fact-text">
+          <strong>The 17,683,000 Score</strong> — The biggest single score of <strong>17,683,000 aUEC</strong> at <strong>Rustville</strong> on a C2 Hercules Starlifter carrying Atlasium, Dymantium, Neon remains the standout moment of the entire run.
+        </div>
+      </div>
+      <div class="fun-fact-item">
+        <div class="fun-fact-bullet">▸</div>
+        <div class="fun-fact-text">
+          <strong>Terra Mills HydroFarm — Ground Zero</strong> — <strong>Terra Mills HydroFarm</strong> was the most targeted location with <strong>90 hits (18.3%)</strong>, cementing its place as the primary hunting ground across all patches.
+        </div>
+      </div>
+      <div class="fun-fact-item">
+        <div class="fun-fact-bullet">▸</div>
+        <div class="fun-fact-text">
+          <strong>Construction Materials — Top Earner</strong> — <strong>Construction Materials</strong generated the highest total aUEC yield of <strong>107,368,185 aUEC</strong> (13.8% of all commodity value) from just <strong>47 occurrences</strong> — far outpacing high-frequency lower-value cargo.
+        </div>
+      </div>
+      <div class="fun-fact-item">
+        <div class="fun-fact-bullet">▸</div>
+        <div class="fun-fact-text">
+          <strong>Recycled Material Composite — Most Encountered Cargo</strong> — <strong>Recycled Material Composite</strong> appeared in <strong>109 instances</strong> across all patches — the most frequent commodity by occurrence count — contributing <strong>59,187,253 aUEC</strong> (7.6% of total commodity value).
+        </div>
+      </div>
+      <div class="fun-fact-item">
+        <div class="fun-fact-bullet">▸</div>
+        <div class="fun-fact-text">
+          <strong>Vulture — Favorite Target</strong> — The <strong>Vulture</strong> was targeted <strong>44 times (8.9%)</strong>, more than any other ship class — a testament to its vulnerability and value on the open markets.
+        </div>
+      </div>
+      <div class="fun-fact-item">
+        <div class="fun-fact-bullet">▸</div>
+        <div class="fun-fact-text">
+          <strong>57 Unique Hunting Grounds</strong> — The SnareBears struck across <strong>57 distinct locations</strong> spanning STANTON SYSTEM and PYRO SYSTEM and NYX SYSTEM — demonstrating broad geographic reach and the ability to operate in any environment.
+        </div>
+      </div>
+      <div class="fun-fact-item">
+        <div class="fun-fact-bullet">▸</div>
+        <div class="fun-fact-text">
+          <strong>45 Total Raiders, 56+ Weeks of Action</strong> — A total of <strong>45 unique individuals</strong> participated in SnareBears operations at some point. <strong>wardawg</strong> was the most consistent and productive raider — hitting across all 7 patches and logging the most total hits at 246.
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ══ FOOTER ════════════════════════════════════════════ -->
+  <div class="footer">
+    <span>☠ Snare Bears — Piracy Operations</span>
+    <span>Aggregated: 2025-06-21 to 2026-07-15 · Source: All 7 Patch JSON Files</span>
+  </div>
+
+</body>
+</html>

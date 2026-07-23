@@ -8,7 +8,8 @@ const infographics = [
   'SnareBears_4.5_Infographic.html',
   'SnareBears_4.6_Infographic.html',
   'SnareBears_4.7_Infographic.html',
-  'SnareBears_4.8_Infographic.html'
+  'SnareBears_4.8_Infographic.html',
+  'SnareBears_Overall_Infographic.html'
 ];
 
 (async () => {
